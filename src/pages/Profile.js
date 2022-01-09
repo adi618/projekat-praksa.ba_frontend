@@ -1,6 +1,10 @@
 import { useState } from "react";
-
 import { Box, Typography, CardMedia } from "@mui/material";
+
+import EducationTab from "../containers/Profile/EducationTab";
+import ExperienceTab from "../containers/Profile/ExperienceTab";
+import SkillsTab from "../containers/Profile/SkillsTab";
+import ProjectsTab from "../containers/Profile/ProjectsTab";
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -80,12 +84,17 @@ const Profile = () => {
                 borderBottom: index === activeTab ? "2px solid black" : "none",
               }}
               onClick={() => tabChangeHandler(index)}
+              key={index}
             >
               {option}
             </Typography>
           ))}
         </Box>
       </Box>
+      {activeTab === 0 && <EducationTab></EducationTab>}
+      {activeTab === 1 && <ExperienceTab></ExperienceTab>}
+      {activeTab === 2 && <SkillsTab></SkillsTab>}
+      {activeTab === 3 && <ProjectsTab></ProjectsTab>}
     </>
   );
 };
