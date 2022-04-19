@@ -1,9 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = { value: "" }; //temporary, needs to be an object with more info?
+const initialState = { value: '' }; // temporary, needs to be an object with more info?
 
 export const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState,
   reducers: {
     login: (state, action) => {
