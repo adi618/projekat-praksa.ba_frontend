@@ -8,4 +8,5 @@ const reducer = {
 
 export const store = configureStore({
   reducer,
+  // middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 });
