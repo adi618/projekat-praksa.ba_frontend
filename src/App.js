@@ -26,7 +26,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" exact element={<Home />} />
-            <Route path="/auth" exact element={<Auth />} />
+            <Route path="/zapocni" exact element={<Auth />} />
             <Route path="/praksa:id" exact element={<Post />} />
             <Route path="/*" element={<Navigate replace to="/" />} />
           </Routes>

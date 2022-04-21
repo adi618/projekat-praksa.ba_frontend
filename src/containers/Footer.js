@@ -7,7 +7,8 @@ function Footer() {
         display: 'flex',
         justifyContent: 'end',
         textAlign: 'center',
-        py: 3,
+        alignItems: 'center',
+        height: '8%',
       }}
     >
       <Typography

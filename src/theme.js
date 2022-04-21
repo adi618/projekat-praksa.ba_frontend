@@ -62,6 +62,26 @@ const customTheme = createTheme({
         },
       },
     },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+          '&.Mui-disabled': {
+            color: 'white',
+          },
+        },
+      },
+      variants: [
+        {
+          props: { variant: 'primary' },
+          style: {
+            backgroundColor: primary600,
+            borderRadius: '8px',
+            minWidth: '65%',
+          },
+        },
+      ],
+    },
   },
 });
 

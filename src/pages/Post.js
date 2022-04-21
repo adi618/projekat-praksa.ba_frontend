@@ -28,4 +28,5 @@ function Post() {
     </Box>
   );
 }
+
 export default Post;
