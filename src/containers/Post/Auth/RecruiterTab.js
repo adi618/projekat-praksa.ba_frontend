@@ -3,7 +3,7 @@ import { Typography, Button, Box } from '@mui/material';
 function RecruiterTab() {
   return (
     <>
-      <Box sx={{ height: '40%', width: '100%', textAlign: 'center' }}>
+      <Box sx={{ width: '100%', textAlign: 'center' }}>
         <Typography
           mb={5}
           variant="h1"
