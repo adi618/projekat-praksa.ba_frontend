@@ -8,7 +8,7 @@ function Footer() {
         justifyContent: 'end',
         textAlign: 'center',
         alignItems: 'center',
-        height: '8%',
+        minHeight: '8%',
       }}
     >
       <Typography

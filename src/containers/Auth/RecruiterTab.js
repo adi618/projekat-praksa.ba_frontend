@@ -1,6 +1,9 @@
 import { Typography, Button, Box } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { AUTH_COMPONENTS } from '../../constants';
 
-function RecruiterTab() {
+function RecruiterTab({ setCurrentComponent }) {
+  const navigate = useNavigate();
   return (
     <>
       <Box sx={{ width: '100%', textAlign: 'center' }}>
@@ -35,6 +38,7 @@ function RecruiterTab() {
         </Box>
         <Button
           variant="primary"
+          onClick={() => setCurrentComponent(AUTH_COMPONENTS.REGISTER)}
         >
           Registruj se kao firma
         </Button>
@@ -56,6 +60,7 @@ function RecruiterTab() {
         </Typography>
         <Button
           variant="primary"
+          onClick={() => setCurrentComponent(AUTH_COMPONENTS.LOGIN)}
         >
           Prijavite se
         </Button>

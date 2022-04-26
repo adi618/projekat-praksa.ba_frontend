@@ -43,7 +43,7 @@ function StudentTab() {
           Pronađi praksu
         </Button>
       </Box>
-      <Box />
+      <Box height={56} />
     </>
   );
 }
