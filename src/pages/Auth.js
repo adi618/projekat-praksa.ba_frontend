@@ -5,6 +5,7 @@ import LoginTab from '../containers/Auth/LoginTab';
 import RecruiterTab from '../containers/Auth/RecruiterTab';
 import RegisterTab from '../containers/Auth/RegisterTab';
 import StudentTab from '../containers/Auth/StudentTab';
+import Footer from '../containers/Footer';
 
 function RenderCurrentComponent({ currentComponent, setCurrentComponent }) {
   switch (currentComponent) {
@@ -25,10 +26,10 @@ function Auth() {
   const [currentComponent, setCurrentComponent] = useState(AUTH_COMPONENTS.STUDENT);
 
   return (
-    <Box sx={{ height: '100%' }}>
+    <>
       <Box
         sx={(theme) => ({
-          height: '15%',
+          height: '15vh',
           width: '100%',
           bgcolor: 'primary.main',
           display: 'flex',
@@ -58,7 +59,7 @@ function Auth() {
       </Box>
       <Box
         sx={{
-          height: '93%',
+          minHeight: '77vh',
           width: '100%',
           bgcolor: 'primary.500',
           borderRadius: '20px 20px 0 0',
@@ -73,7 +74,8 @@ function Auth() {
           setCurrentComponent={setCurrentComponent}
         />
       </Box>
-    </Box>
+      <Footer bgcolor="primary.500" />
+    </>
   );
 }
 

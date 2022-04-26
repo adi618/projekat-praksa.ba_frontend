@@ -15,24 +15,14 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-          height: '100vh',
-        }}
-      >
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" exact element={<Home />} />
-            <Route path="/zapocni" exact element={<Auth />} />
-            <Route path="/praksa:id" exact element={<Post />} />
-            <Route path="/*" element={<Navigate replace to="/" />} />
-          </Routes>
-        </BrowserRouter>
-        <Footer />
-      </Box>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" exact element={<Home />} />
+          <Route path="/zapocni" exact element={<Auth />} />
+          <Route path="/praksa:id" exact element={<Post />} />
+          <Route path="/*" element={<Navigate replace to="/" />} />
+        </Routes>
+      </BrowserRouter>
     </ThemeProvider>
   );
 }

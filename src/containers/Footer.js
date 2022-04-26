@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 
-function Footer() {
+function Footer({ bgcolor }) {
   return (
     <Box
       sx={{
@@ -8,7 +8,8 @@ function Footer() {
         justifyContent: 'end',
         textAlign: 'center',
         alignItems: 'center',
-        minHeight: '8%',
+        minHeight: '8vh',
+        bgcolor,
       }}
     >
       <Typography
