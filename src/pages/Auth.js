@@ -1,6 +1,7 @@
 import { Box, Button } from '@mui/material';
 import React, { useState } from 'react';
 import { AUTH_COMPONENTS } from '../constants';
+import FinishedTab from '../containers/Auth/FinishedTab';
 import LoginTab from '../containers/Auth/LoginTab';
 import RecruiterTab from '../containers/Auth/RecruiterTab';
 import RegisterTab from '../containers/Auth/RegisterTab';
@@ -8,6 +9,12 @@ import StudentTab from '../containers/Auth/StudentTab';
 import Footer from '../containers/Footer';
 
 function RenderCurrentComponent({ currentComponent, setCurrentComponent }) {
+  const registrationRequestSent = sessionStorage.getItem('registrationRequestSent');
+
+  if (currentComponent !== AUTH_COMPONENTS.STUDENT && registrationRequestSent) {
+    return <FinishedTab />;
+  }
+
   switch (currentComponent) {
     case (AUTH_COMPONENTS.STUDENT):
       return <StudentTab />;
@@ -16,7 +23,9 @@ function RenderCurrentComponent({ currentComponent, setCurrentComponent }) {
     case (AUTH_COMPONENTS.LOGIN):
       return <LoginTab />;
     case (AUTH_COMPONENTS.REGISTER):
-      return <RegisterTab />;
+      return <RegisterTab setCurrentComponent={setCurrentComponent} />;
+    case (AUTH_COMPONENTS.FINISHED):
+      return <FinishedTab />;
     default:
       return <div>error</div>;
   }

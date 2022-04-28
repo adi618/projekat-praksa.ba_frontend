@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Button, Box, CardMedia } from '@mui/material';
 import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateRounded';
-import { REGEX } from '../../constants';
+import { AUTH_COMPONENTS, REGEX } from '../../constants';
 import TextFieldComponent from '../../components/TextFieldComponent';
 
 const requiredErrorMessage = 'Obavezno polje';
@@ -17,9 +17,9 @@ const schema = yup.object({
   address: yup.string().required(requiredErrorMessage),
 }).required();
 
-function RegisterTab() {
+function RegisterTab({ setCurrentComponent }) {
   const [selectedFile, setSelectedFile] = useState();
-  const [image, setImage] = useState();
+  const [previewImage, setPreviewImage] = useState();
   const pictureUpload = useRef();
 
   const uploadPictureRef = () => {
@@ -27,15 +27,21 @@ function RegisterTab() {
   };
 
   const fileSelectedHandler = (event) => {
-    setSelectedFile(event.target.files[0]);
-    setImage(URL.createObjectURL(event.target.files[0]));
+    if (event.target.files.length !== 0) {
+      setSelectedFile(event.target.files[0]);
+      setPreviewImage(URL.createObjectURL(event.target.files[0]));
+    }
   };
 
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data) => console.log(data); // TODO: backend call
+  const onSubmit = (data) => {
+    console.log(data); // TODO: backend call
+    sessionStorage.setItem('registrationRequestSent', true);
+    setCurrentComponent(AUTH_COMPONENTS.FINISHED);
+  };
 
   return (
     <>
@@ -47,7 +53,7 @@ function RegisterTab() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          marginTop: 10,
+          marginTop: 30,
         }}
       >
         <input
@@ -73,11 +79,11 @@ function RegisterTab() {
           onClick={uploadPictureRef}
         >
           {
-            image ? (
+            previewImage ? (
               <CardMedia
                 component="img"
-                image={image}
-                alt="stfu"
+                image={previewImage}
+                alt="uploaded picture preview"
                 sx={{ height: 175, width: 175 }}
                 // TODO: check how different image resolutions act
                 // maybe limit upload to pictures with the same height and width
@@ -96,7 +102,6 @@ function RegisterTab() {
           name="companyName"
           errorMessage={errors.companyName?.message}
         />
-
         <TextFieldComponent
           required
           label="Email"
@@ -104,7 +109,6 @@ function RegisterTab() {
           name="email"
           errorMessage={errors.email?.message}
         />
-
         <TextFieldComponent
           required
           label="Industrija (IT, Farmacija, itd.)"
@@ -112,7 +116,6 @@ function RegisterTab() {
           name="industry"
           errorMessage={errors.industry?.message}
         />
-
         <TextFieldComponent
           required
           label="Adresa"
@@ -120,7 +123,13 @@ function RegisterTab() {
           name="address"
           errorMessage={errors.address?.message}
         />
-        <Button type="submit" variant="primary" sx={{ mt: 5 }}>Pošalji zahtjev</Button>
+        <Button
+          type="submit"
+          variant="primary"
+          sx={{ mt: 5 }}
+        >
+          Pošalji zahtjev
+        </Button>
       </form>
       <Box />
     </>

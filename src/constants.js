@@ -3,6 +3,7 @@ export const AUTH_COMPONENTS = {
   RECRUITER: 'RECRUITER',
   LOGIN: 'LOGIN',
   REGISTER: 'REGISTER',
+  FINISHED: 'FINISHED',
 };
 
 export const REGEX = {

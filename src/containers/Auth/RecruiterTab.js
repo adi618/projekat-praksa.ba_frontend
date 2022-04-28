@@ -1,9 +1,7 @@
 import { Typography, Button, Box } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 import { AUTH_COMPONENTS } from '../../constants';
 
 function RecruiterTab({ setCurrentComponent }) {
-  const navigate = useNavigate();
   return (
     <>
       <Box sx={{ width: '100%', textAlign: 'center' }}>
