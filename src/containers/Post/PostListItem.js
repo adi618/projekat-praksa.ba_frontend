@@ -1,6 +1,8 @@
 import { Box, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import ArrowRightAltRoundedIcon from '@mui/icons-material/ArrowRightAltRounded';
+import { DescriptionOutlined } from '@mui/icons-material';
+import Post from '../../pages/Post';
 
 function PostListItem({
   id, title, image, imageAlt, location, shortDescription, description,
@@ -53,7 +55,7 @@ function PostListItem({
         <Typography
           variant="body1"
         >
-          {description}
+          {(description.length > 250) ? description.substring(0, 250).concat('...') : description}
         </Typography>
       </Box>
       <Link to={`/praksa:${id}`}>
@@ -66,7 +68,7 @@ function PostListItem({
         >
           <Typography
             variant="body1"
-            sx={{ fontWeight: 'semiBold' }}
+            sx={{ fontWeight: 'semiBold', textDecoration: 'none' }}
           >
             Pročitaj više
           </Typography>

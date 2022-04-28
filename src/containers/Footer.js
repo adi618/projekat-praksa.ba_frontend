@@ -13,7 +13,7 @@ function Footer() {
     >
       <Typography
         variant="body1"
-        sx={{ fontWeight: 'black' }}
+        sx={{ fontWeight: 'black', fontSize: '12px' }}
       >
         praksa.ba
       </Typography>
@@ -24,6 +24,7 @@ function Footer() {
           pl: 1,
           pr: 2,
           fontWeight: 'light',
+          fontSize: '8px',
         }}
       >
         Copyright &copy; 2022. Sva prava zadržana.
