@@ -13,8 +13,12 @@ const invalidEmailErrorMessage = 'Nevažeća email adresa';
 const schema = yup.object({
   companyName: yup.string().required(requiredErrorMessage),
   email: yup.string().required(requiredErrorMessage).matches(REGEX.EMAIL, invalidEmailErrorMessage),
+  password: yup.string().required(requiredErrorMessage).min(6, 'Prekratka lozinka'),
+  confirmPassword: yup.string().required(requiredErrorMessage).oneOf([yup.ref('password')], 'Lozinke se ne poklapaju'),
   industry: yup.string().required(requiredErrorMessage),
+  city: yup.string().required(requiredErrorMessage),
   address: yup.string().required(requiredErrorMessage),
+  phoneNumber: yup.string(),
 }).required();
 
 function RegisterTab({ setCurrentComponent }) {
@@ -45,15 +49,16 @@ function RegisterTab({ setCurrentComponent }) {
 
   return (
     <>
-      <form
+      <Box
+        component="form"
         onSubmit={handleSubmit(onSubmit)}
         noValidate
-        style={{
+        sx={{
           width: '100%',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          marginTop: 30,
+          mt: 4,
         }}
       >
         <input
@@ -109,6 +114,26 @@ function RegisterTab({ setCurrentComponent }) {
           name="email"
           errorMessage={errors.email?.message}
         />
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '80vw' }}>
+          <TextFieldComponent
+            required
+            label="Lozinka"
+            register={register}
+            name="password"
+            errorMessage={errors.password?.message}
+            type="password"
+            width="48%"
+          />
+          <TextFieldComponent
+            required
+            label="Potvrdite lozinku"
+            register={register}
+            name="confirmPassword"
+            errorMessage={errors.confirmPassword?.message}
+            type="password"
+            width="48%"
+          />
+        </Box>
         <TextFieldComponent
           required
           label="Industrija (IT, Farmacija, itd.)"
@@ -116,12 +141,29 @@ function RegisterTab({ setCurrentComponent }) {
           name="industry"
           errorMessage={errors.industry?.message}
         />
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '80vw' }}>
+          <TextFieldComponent
+            required
+            label="Grad"
+            register={register}
+            name="city"
+            errorMessage={errors.city?.message}
+            width="30%"
+          />
+          <TextFieldComponent
+            required
+            label="Adresa"
+            register={register}
+            name="address"
+            errorMessage={errors.address?.message}
+            width="66%"
+          />
+        </Box>
         <TextFieldComponent
-          required
-          label="Adresa"
+          label="Broj telefona"
           register={register}
-          name="address"
-          errorMessage={errors.address?.message}
+          name="phoneNumber"
+          errorMessage={errors.phoneNumber?.message}
         />
         <Button
           type="submit"
@@ -130,7 +172,7 @@ function RegisterTab({ setCurrentComponent }) {
         >
           Pošalji zahtjev
         </Button>
-      </form>
+      </Box>
       <Box />
     </>
   );
