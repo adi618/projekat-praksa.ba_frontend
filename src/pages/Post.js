@@ -26,11 +26,17 @@ function Post() {
   return (
     <Box sx={{ bgcolor: 'primary.500' }}>
       <img src="https://ptf.unze.ba/wp/wp-content/uploads/2017/11/Logo-PTF-2.jpg" alt="logo" />
-      <h4>Politehnički fakultet</h4>
-      <h5>Praksa za studente svih odsjeka</h5>
-      <p>+387 32 449 120</p>
-      <p>ptf@unze.ba</p>
-      <p>Fakultetska 1, 72000 Zenica</p>
+      <Typography>
+        Politehnički fakultet
+        <br />
+        Praksa za studente svih odsjeka
+        <br />
+        +387 32 449 120
+        <br />
+        ptf@unze.ba
+        <br />
+        Fakultetska 1, 72000 Zenica
+      </Typography>
       <Box sx={{ bgcolor: 'primary.600', p: 1.5, m: 50 }}>
         <Box sx={{ bgcolor: 'primary.600', p: 1.5 }}>
           <Typography
@@ -44,30 +50,15 @@ function Post() {
             variant="body1"
           >
             Plitehnički fakultet u Zenici objavljuje oglas za studentsku praksu za studente Politeh.
-          </Typography>
-          <Typography
-            variant="body1"
-          >
+            <br />
             Paksa će obuhvatati segmente vezane za smjer koji studirate, a vodit će je tim profesora
-          </Typography>
-          <Typography
-            variant="body1"
-          >
+            <br />
             Svi zainteresovani studenti mogu se prijaviti slanjem e-maila na ptf@unze.ba
-          </Typography>
-          <Typography
-            variant="body1"
-          >
+            <br />
             Početak? Planirano je da praksa počne ubrzo nakon početka ljetnog semestra.
-          </Typography>
-          <Typography
-            variant="body1"
-          >
+            <br />
             Trajanje? Planirano trajanje prakse je dva (2) mjeseca.
-          </Typography>
-          <Typography
-            variant="body1"
-          >
+            <br />
             Lokacija? Fakultetska 1, 72000 Zenica
           </Typography>
         </Box>
