@@ -20,7 +20,6 @@ function LoginTab({ setCurrentComponent }) {
 
   const onSubmit = (data) => {
     console.log(data); // TODO: backend call
-    sessionStorage.setItem('registrationRequestSent', true);
     setCurrentComponent(AUTH_COMPONENTS.FINISHED);
   };
 

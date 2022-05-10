@@ -9,12 +9,6 @@ import StudentTab from '../containers/Auth/StudentTab';
 import Footer from '../containers/Footer';
 
 function RenderCurrentComponent({ currentComponent, setCurrentComponent }) {
-  const registrationRequestSent = sessionStorage.getItem('registrationRequestSent');
-
-  if (currentComponent !== AUTH_COMPONENTS.STUDENT && registrationRequestSent) {
-    return <FinishedTab />;
-  }
-
   switch (currentComponent) {
     case (AUTH_COMPONENTS.STUDENT):
       return <StudentTab />;

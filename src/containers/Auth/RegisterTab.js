@@ -6,6 +6,7 @@ import { Button, Box, CardMedia } from '@mui/material';
 import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateRounded';
 import { AUTH_COMPONENTS, REGEX } from '../../constants';
 import TextFieldComponent from '../../components/TextFieldComponent';
+import { signUp } from '../../api';
 
 const requiredErrorMessage = 'Obavezno polje';
 const invalidEmailErrorMessage = 'Nevažeća email adresa';
@@ -42,8 +43,9 @@ function RegisterTab({ setCurrentComponent }) {
   });
 
   const onSubmit = (data) => {
-    console.log(data); // TODO: backend call
-    sessionStorage.setItem('registrationRequestSent', true);
+    console.log('backend call', data);
+    data.profilePicture = selectedFile;
+    signUp(data);
     setCurrentComponent(AUTH_COMPONENTS.FINISHED);
   };
 
@@ -66,7 +68,7 @@ function RegisterTab({ setCurrentComponent }) {
           style={{ display: 'none' }}
           onChange={fileSelectedHandler}
           ref={pictureUpload}
-          accept="image/x-png,image/gif,image/jpeg"
+          accept="image/x-png,image/jpeg"
         />
         <Box
           sx={(theme) => ({

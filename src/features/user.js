@@ -1,17 +1,46 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { signUp } from '../api';
 
-const initialState = { value: '' }; // temporary, needs to be an object with more info?
+const initialState = {
+  user: {},
+  error: {
+    isError: false,
+    message: '',
+  },
+  isLoading: false,
+};
+
+export const createNewUser = createAsyncThunk(
+  'user/add',
+  async (userAndStatus, { rejectWithValue }) => {
+    try {
+      const response = await signUp(userAndStatus);
+
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.message);
+    }
+  },
+);
 
 export const userSlice = createSlice({
-  name: 'user',
+  name: 'userData',
   initialState,
   reducers: {
     login: (state, action) => {
-      state.value = action.payload;
+      state.user = action.payload;
+      state.error.isError = false;
+      state.isLoading = false;
     },
-
     logout: (state) => {
-      state.value = initialState.value;
+      state.user = initialState.user;
+      state.error = initialState.error;
+      state.isLoading = initialState.isLoading;
+    },
+  },
+  extraReducers: {
+    [createNewUser.pending]: (state) => {
+      state.isLoading = true;
     },
   },
 });
