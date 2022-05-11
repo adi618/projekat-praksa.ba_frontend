@@ -5,7 +5,7 @@ function PostList({
   posts,
 }) {
   return (
-    <Box>
+    <Box px={2}>
       {posts.map((post) => (
         <PostListItem
           key={post.id}
