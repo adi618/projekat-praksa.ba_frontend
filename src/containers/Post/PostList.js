@@ -1,18 +1,11 @@
 import { Box } from '@mui/material';
-import { DRAWER } from '../../constants';
 import PostListItem from './PostListItem';
 
 function PostList({
   posts,
 }) {
   return (
-    <Box
-      sx={{
-        px: 2,
-        width: { md: `calc(100% - ${DRAWER.WIDTH})` },
-        ml: { md: `${DRAWER.WIDTH}` },
-      }}
-    >
+    <Box>
       {posts.map((post) => (
         <PostListItem
           key={post.id}

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import PostList from '../containers/Post/PostList';
-import Navigation from '../components/Navigation';
 
 function Home() {
   const [posts, setPosts] = useState([]);
@@ -21,10 +20,7 @@ function Home() {
   }, []);
 
   return (
-    <>
-      <PostList posts={posts} />
-      <Navigation />
-    </>
+    <PostList posts={posts} />
   );
 }
 

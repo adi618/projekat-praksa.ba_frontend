@@ -116,7 +116,7 @@ function RegisterTab({ setCurrentComponent }) {
           name="email"
           errorMessage={errors.email?.message}
         />
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '80vw' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '80%' }}>
           <TextFieldComponent
             required
             label="Lozinka"
@@ -143,7 +143,7 @@ function RegisterTab({ setCurrentComponent }) {
           name="industry"
           errorMessage={errors.industry?.message}
         />
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '80vw' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '80%' }}>
           <TextFieldComponent
             required
             label="Grad"

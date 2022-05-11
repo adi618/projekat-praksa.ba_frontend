@@ -1,5 +1,6 @@
 import { Box, Button } from '@mui/material';
-import React, { useState } from 'react';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { AUTH_COMPONENTS } from '../constants';
 import FinishedTab from '../containers/Auth/FinishedTab';
 import LoginTab from '../containers/Auth/LoginTab';
@@ -7,17 +8,18 @@ import RecruiterTab from '../containers/Auth/RecruiterTab';
 import RegisterTab from '../containers/Auth/RegisterTab';
 import StudentTab from '../containers/Auth/StudentTab';
 import Footer from '../containers/Footer';
+import { setCurrentComponent } from '../features/authComponent';
 
-function RenderCurrentComponent({ currentComponent, setCurrentComponent }) {
+function RenderCurrentComponent({ currentComponent, setComponent }) {
   switch (currentComponent) {
     case (AUTH_COMPONENTS.STUDENT):
       return <StudentTab />;
     case (AUTH_COMPONENTS.RECRUITER):
-      return <RecruiterTab setCurrentComponent={setCurrentComponent} />;
+      return <RecruiterTab setCurrentComponent={setComponent} />;
     case (AUTH_COMPONENTS.LOGIN):
       return <LoginTab />;
     case (AUTH_COMPONENTS.REGISTER):
-      return <RegisterTab setCurrentComponent={setCurrentComponent} />;
+      return <RegisterTab setCurrentComponent={setComponent} />;
     case (AUTH_COMPONENTS.FINISHED):
       return <FinishedTab />;
     default:
@@ -26,7 +28,8 @@ function RenderCurrentComponent({ currentComponent, setCurrentComponent }) {
 }
 
 function Auth() {
-  const [currentComponent, setCurrentComponent] = useState(AUTH_COMPONENTS.STUDENT);
+  const dispatch = useDispatch();
+  const { currentComponent } = useSelector((state) => state.authComponent);
 
   return (
     <>
@@ -43,7 +46,7 @@ function Auth() {
       >
         <Button
           onClick={() => {
-            setCurrentComponent(AUTH_COMPONENTS.STUDENT);
+            dispatch(setCurrentComponent(AUTH_COMPONENTS.STUDENT));
           }}
           disabled={currentComponent === AUTH_COMPONENTS.STUDENT}
           sx={{ color: 'rgba(255, 255, 255, 0.5)' }}
@@ -52,7 +55,7 @@ function Auth() {
         </Button>
         <Button
           onClick={() => {
-            setCurrentComponent(AUTH_COMPONENTS.RECRUITER);
+            dispatch(setCurrentComponent(AUTH_COMPONENTS.RECRUITER));
           }}
           disabled={currentComponent !== AUTH_COMPONENTS.STUDENT}
           sx={{ color: 'rgba(255, 255, 255, 0.5)' }}
@@ -74,7 +77,7 @@ function Auth() {
       >
         <RenderCurrentComponent
           currentComponent={currentComponent}
-          setCurrentComponent={setCurrentComponent}
+          setComponent={(component) => dispatch(setCurrentComponent(component))}
         />
       </Box>
       <Footer bgcolor="primary.500" />

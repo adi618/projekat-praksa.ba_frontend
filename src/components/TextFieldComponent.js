@@ -41,7 +41,7 @@ function TextFieldComponent({
   );
 }
 
-TextFieldComponent.defaultProps = { width: '80vw' };
+TextFieldComponent.defaultProps = { width: '80%' };
 
 TextFieldComponent.propTypes = {
   width: PropTypes.string,

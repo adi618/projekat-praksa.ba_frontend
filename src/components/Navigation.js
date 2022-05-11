@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   AppBar,
-  Button,
   IconButton,
   Toolbar,
   Typography,
@@ -14,10 +13,21 @@ import {
   ListItemButton,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { DRAWER } from '../constants';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { AUTH_COMPONENTS, DRAWER } from '../constants';
+import { ROUTE_PATHS } from '../routes';
+import { setCurrentComponent } from '../features/authComponent';
 
 function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const isLandingPage = location.pathname === ROUTE_PATHS.AUTH;
+  // we don't want the mobile navigation showing on the landing page
+  // landing page aka login/register (auth) page
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -31,10 +41,10 @@ function Navigation() {
             Praksa.ba
           </Typography>
         </ListItem>
-        <ListItemButton component="a" href="/">
+        <ListItemButton component="a" href={ROUTE_PATHS.AUTH}>
           <ListItemText primary="Početna" />
         </ListItemButton>
-        <ListItemButton>
+        <ListItemButton component="a" href={ROUTE_PATHS.HOME}>
           <ListItemText primary="Pretraži oglase" />
         </ListItemButton>
         <ListItemButton>
@@ -48,10 +58,18 @@ function Navigation() {
             Kompanija ste?
           </Typography>
         </ListItem>
-        <ListItemButton>
+        <ListItemButton onClick={() => {
+          dispatch(setCurrentComponent(AUTH_COMPONENTS.LOGIN));
+          navigate(ROUTE_PATHS.AUTH);
+        }}
+        >
           <ListItemText primary="Prijavite se" />
         </ListItemButton>
-        <ListItemButton>
+        <ListItemButton onClick={() => {
+          dispatch(setCurrentComponent(AUTH_COMPONENTS.REGISTER));
+          navigate(ROUTE_PATHS.AUTH);
+        }}
+        >
           <ListItemText primary="Registrujte se" />
         </ListItemButton>
       </List>
@@ -60,6 +78,7 @@ function Navigation() {
 
   return (
     <>
+      {!isLandingPage && (
       <AppBar position="fixed" sx={{ bottom: -1, top: 'auto', display: { md: 'none' } }}>
         <Toolbar>
           <IconButton
@@ -76,6 +95,7 @@ function Navigation() {
           </Typography>
         </Toolbar>
       </AppBar>
+      )}
       <Box
         component="nav"
         sx={{
