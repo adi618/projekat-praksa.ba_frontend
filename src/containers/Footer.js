@@ -1,15 +1,20 @@
 import { Box, Typography } from '@mui/material';
 
-function Footer({ bgcolor }) {
+function Footer() {
   return (
     <Box
       sx={{
+        position: 'fixed',
+        bottom: 0,
+        right: 0,
+        width: '100%',
         display: 'flex',
         justifyContent: 'end',
         textAlign: 'center',
         alignItems: 'center',
         minHeight: '8vh',
-        bgcolor,
+        bgcolor: 'primary.500',
+        zIndex: 1000,
       }}
     >
       <Typography

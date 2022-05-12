@@ -12,6 +12,7 @@ function App() {
       <BrowserRouter>
         <Box
           sx={{
+            height: '100vh',
             width: { md: `calc(100% - ${DRAWER.WIDTH})` },
             ml: { md: `${DRAWER.WIDTH}` },
           }}

@@ -18,9 +18,6 @@ function TextFieldComponent({
           width: '100%',
           mt: 2,
           bgcolor: 'white',
-          '& .MuiFilledInput-root': {
-            bgcolor: 'primary.500',
-          },
           '& .MuiFilledInput-input': {
             borderRadius: 4,
             bgcolor: 'white',
@@ -31,6 +28,12 @@ function TextFieldComponent({
           },
           '& .MuiInputLabel-asterisk': {
             color: 'error.main',
+          },
+          '& .MuiFilledInput-root': {
+            bgcolor: 'primary.500',
+          },
+          '& .MuiFilledInput-root:hover': {
+            bgcolor: 'primary.500',
           },
         })}
         InputProps={{ disableUnderline: true, style: { fontSize: 14 } }}

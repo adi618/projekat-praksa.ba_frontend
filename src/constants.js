@@ -11,5 +11,5 @@ export const REGEX = {
 };
 
 export const DRAWER = {
-  WIDTH: '300px',
+  WIDTH: '280px',
 };

@@ -24,13 +24,15 @@ function LoginTab({ setCurrentComponent }) {
   };
 
   return (
-    <>
+    <Box sx={{ width: '100%' }}>
       <Box
         component="form"
         onSubmit={handleSubmit(onSubmit)}
         noValidate
         sx={{
-          width: '100%',
+          height: '100%',
+          width: { xs: '100%', lg: '60%' },
+          maxWidth: '1000px',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -38,13 +40,12 @@ function LoginTab({ setCurrentComponent }) {
         }}
       >
         <Typography
-          mb={5}
+          sx={{ mb: 5, display: { md: 'none' } }}
           variant="h1"
           fontWeight="extraBold"
         >
           praksa.ba
         </Typography>
-
         <TextFieldComponent
           required
           label="Email"
@@ -75,8 +76,15 @@ function LoginTab({ setCurrentComponent }) {
           Zaboravili ste lozinku?
         </Button>
       </Box>
-      <Box />
-    </>
+      <Box>
+        {/* <CardMedia
+          component="img"
+          image={authHeaderImage}
+          // sx={{ filter: 'brightness(70%)' }}
+          alt="header"
+        /> */}
+      </Box>
+    </Box>
   );
 }
 

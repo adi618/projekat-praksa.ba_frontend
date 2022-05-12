@@ -37,14 +37,15 @@ function Navigation() {
     <>
       <List>
         <ListItem>
-          <Typography variant="h5" sx={{ fontWeight: 'extraBold' }}>
-            Praksa.ba
-          </Typography>
+          <ListItemText
+            primary="Praksa.ba"
+            primaryTypographyProps={{ variant: 'h5', fontWeight: 'extraBold' }}
+          />
         </ListItem>
-        <ListItemButton component="a" href={ROUTE_PATHS.AUTH}>
+        <ListItemButton onClick={() => navigate(ROUTE_PATHS.AUTH)}>
           <ListItemText primary="Početna" />
         </ListItemButton>
-        <ListItemButton component="a" href={ROUTE_PATHS.HOME}>
+        <ListItemButton onClick={() => navigate(ROUTE_PATHS.HOME)}>
           <ListItemText primary="Pretraži oglase" />
         </ListItemButton>
         <ListItemButton>
@@ -54,9 +55,10 @@ function Navigation() {
       <Divider />
       <List>
         <ListItem>
-          <Typography variant="h6" sx={{ fontWeight: 'medium' }}>
-            Kompanija ste?
-          </Typography>
+          <ListItemText
+            primary="Kompanija ste?"
+            primaryTypographyProps={{ variant: 'h6', fontWeight: 'medium' }}
+          />
         </ListItem>
         <ListItemButton onClick={() => {
           dispatch(setCurrentComponent(AUTH_COMPONENTS.LOGIN));
@@ -125,11 +127,14 @@ function Navigation() {
         <Drawer
           variant="permanent"
           sx={{
-            display: { xs: 'none', md: 'block' },
+            display: { xs: 'none', md: 'flex' },
             '& .MuiDrawer-paper': {
               bgcolor: 'primary.main',
               color: 'white',
               width: DRAWER.WIDTH,
+            },
+            '& .MuiTypography-root': {
+              textAlign: 'center',
             },
           }}
           open
