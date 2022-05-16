@@ -12,3 +12,4 @@ API.interceptors.request.use((req) => {
 
 export const signIn = (formData) => API.post('/login', formData);
 export const signUp = (formData) => API.post('/register', formData);
+export const verifyToken = (token) => API.post('/verifyToken', token);

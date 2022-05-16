@@ -81,18 +81,26 @@ function Navigation() {
   return (
     <>
       {!isLandingPage && (
-      <AppBar position="fixed" sx={{ bottom: -1, top: 'auto', display: { md: 'none' } }}>
+      <AppBar
+        position="fixed"
+        sx={{
+          bottom: -1,
+          top: 'auto',
+          display: { md: 'none' },
+          bgcolor: 'primary.500',
+          boxShadow: '0px 2px 6px -1px rgb(0 0 0 / 30%), 0px 4px 8px 0px rgb(0 0 0 / 24%), 0px 1px 10px 0px rgb(0 0 0 / 18%);',
+        }}
+      >
         <Toolbar>
           <IconButton
             size="large"
             edge="start"
-            color="inherit"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2 }}
+            sx={{ mr: 2, color: 'black' }}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+          <Typography variant="h6" sx={{ flexGrow: 1, color: 'black' }}>
             News
           </Typography>
         </Toolbar>
@@ -132,6 +140,7 @@ function Navigation() {
               bgcolor: 'primary.main',
               color: 'white',
               width: DRAWER.WIDTH,
+              borderRight: 'none',
             },
             '& .MuiTypography-root': {
               textAlign: 'center',

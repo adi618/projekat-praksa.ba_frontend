@@ -14,7 +14,7 @@ const invalidEmailErrorMessage = 'Nevažeća email adresa';
 const schema = yup.object({
   companyName: yup.string().required(requiredErrorMessage),
   email: yup.string().required(requiredErrorMessage).matches(REGEX.EMAIL, invalidEmailErrorMessage),
-  password: yup.string().required(requiredErrorMessage).min(6, 'Prekratka lozinka'),
+  password: yup.string().required(requiredErrorMessage).min(5, 'Prekratka lozinka'),
   confirmPassword: yup.string().required(requiredErrorMessage).oneOf([yup.ref('password')], 'Lozinke se ne poklapaju'),
   industry: yup.string().required(requiredErrorMessage),
   city: yup.string().required(requiredErrorMessage),
@@ -172,7 +172,7 @@ function RegisterTab({ setCurrentComponent }) {
           variant="primary"
           sx={{ mt: 5 }}
         >
-          Pošalji zahtjev
+          Registrujte se
         </Button>
       </Box>
       <Box />

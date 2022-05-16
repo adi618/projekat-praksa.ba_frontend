@@ -1,6 +1,4 @@
-import {
-  Box, Button, CardMedia, Typography, useMediaQuery,
-} from '@mui/material';
+import { Box } from '@mui/material';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AUTH_COMPONENTS } from '../constants';
@@ -12,7 +10,7 @@ import StudentTab from '../containers/Auth/StudentTab';
 import Footer from '../containers/Footer';
 import { setCurrentComponent } from '../features/authComponent';
 
-import authHeaderImage from '../assets/images/authHeaderImage.jpg';
+import AuthHeader from '../containers/Auth/AuthHeader';
 
 function RenderCurrentComponent({ currentComponent, setComponent }) {
   switch (currentComponent) {
@@ -21,7 +19,7 @@ function RenderCurrentComponent({ currentComponent, setComponent }) {
     case (AUTH_COMPONENTS.RECRUITER):
       return <RecruiterTab setCurrentComponent={setComponent} />;
     case (AUTH_COMPONENTS.LOGIN):
-      return <LoginTab />;
+      return <LoginTab setCurrentComponent={setComponent} />;
     case (AUTH_COMPONENTS.REGISTER):
       return <RegisterTab setCurrentComponent={setComponent} />;
     case (AUTH_COMPONENTS.FINISHED):
@@ -36,8 +34,6 @@ function Auth() {
 
   const { currentComponent } = useSelector((state) => state.authComponent);
 
-  const isWiderThanMd = useMediaQuery((theme) => theme.breakpoints.up('md'));
-
   return (
     <Box
       sx={(theme) => ({
@@ -49,85 +45,7 @@ function Auth() {
         pb: 10,
       })}
     >
-      {!isWiderThanMd ? (
-        <Box
-          sx={(theme) => ({
-            height: '15vh',
-            width: '100%',
-            bgcolor: 'primary.main',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            boxShadow: `0px 30px ${theme.palette.primary.main}`,
-          })}
-        >
-          <Button
-            onClick={() => {
-              dispatch(setCurrentComponent(AUTH_COMPONENTS.STUDENT));
-            }}
-            disabled={currentComponent === AUTH_COMPONENTS.STUDENT}
-            sx={{ color: 'rgba(255, 255, 255, 0.5)' }}
-          >
-            Tražiš praksu?
-          </Button>
-          <Button
-            onClick={() => {
-              dispatch(setCurrentComponent(AUTH_COMPONENTS.RECRUITER));
-            }}
-            disabled={currentComponent !== AUTH_COMPONENTS.STUDENT}
-            sx={{ color: 'rgba(255, 255, 255, 0.5)' }}
-          >
-            Nudiš praksu?
-          </Button>
-        </Box>
-      )
-        : (
-          <Box
-            sx={{
-              bgcolor: 'primary.main',
-              maxHeight: '200px',
-              overflow: 'hidden',
-              display: 'flex',
-              position: 'relative',
-            }}
-          >
-            <CardMedia
-              component="img"
-              image={authHeaderImage}
-              sx={{ filter: 'brightness(70%)', opacity: '35%' }}
-              alt="header"
-            />
-            <Box sx={{
-              position: 'absolute',
-              color: 'white',
-              display: 'flex',
-              justifyContent: 'center',
-              flexDirection: 'column',
-              height: '100%',
-              pl: 8,
-            }}
-            >
-              <Typography
-                variant="h5"
-                sx={{ fontWeight: 'semiBold', pb: 2 }}
-              >
-                Prijavite se
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{ fontWeight: 'normal' }}
-              >
-                Hvala Vam što ste dio zajednice koja pruža priliku mladima.
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{ fontWeight: 'normal' }}
-              >
-                Za mlade!
-              </Typography>
-            </Box>
-          </Box>
-        )}
+      <AuthHeader />
       <Box
         sx={{
           minHeight: '100%',

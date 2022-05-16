@@ -2,24 +2,28 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Button, Box, Typography } from '@mui/material';
+import { useDispatch } from 'react-redux';
 import { AUTH_COMPONENTS, REGEX } from '../../constants';
 import TextFieldComponent from '../../components/TextFieldComponent';
+import { signInUser } from '../../features/user';
 
 const requiredErrorMessage = 'Obavezno polje';
 const invalidEmailErrorMessage = 'Nevažeća email adresa';
 
 const schema = yup.object({
   email: yup.string().required(requiredErrorMessage).matches(REGEX.EMAIL, invalidEmailErrorMessage),
-  password: yup.string().required(requiredErrorMessage).min(6, 'Prekratka lozinka'),
+  password: yup.string().required(requiredErrorMessage).min(5, 'Prekratka lozinka'),
 }).required();
 
 function LoginTab({ setCurrentComponent }) {
+  const dispatch = useDispatch();
+
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
   });
 
   const onSubmit = (data) => {
-    console.log(data); // TODO: backend call
+    dispatch(signInUser(data));
     setCurrentComponent(AUTH_COMPONENTS.FINISHED);
   };
 

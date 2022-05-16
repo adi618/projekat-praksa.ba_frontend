@@ -1,11 +1,21 @@
 import { ThemeProvider, CssBaseline, Box } from '@mui/material';
+import { useDispatch } from 'react-redux';
 import { BrowserRouter, Routes } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import { DRAWER } from './constants';
+import { verifyTokenUser } from './features/user';
 import getRoutes from './routes';
 import theme from './theme';
 
 function App() {
+  const dispatch = useDispatch();
+
+  const profileToken = localStorage.getItem('profile');
+
+  if (profileToken) {
+    dispatch(verifyTokenUser(profileToken));
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
