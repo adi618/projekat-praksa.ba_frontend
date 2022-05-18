@@ -59,6 +59,7 @@ export const userSlice = createSlice({
       state.user = {};
       state.error = { isError: false, message: '' };
       state.isLoading = false;
+      localStorage.removeItem('token');
     },
   },
   extraReducers: {

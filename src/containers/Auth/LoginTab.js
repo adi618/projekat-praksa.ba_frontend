@@ -5,7 +5,7 @@ import {
   Button, Box, Typography, CardMedia,
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { AUTH_COMPONENTS, REGEX } from '../../constants';
+import { AUTH_COMPONENTS, BACKEND_HOST, REGEX } from '../../constants';
 import TextFieldComponent from '../../components/TextFieldComponent';
 import { signInUser } from '../../features/user';
 
@@ -84,12 +84,11 @@ function LoginTab({ setCurrentComponent }) {
         </Button>
       </Box>
       <Box>
-        {/* <CardMedia
+        <CardMedia
           component="img"
-          image={userData.user.profilePhoto}
-          // sx={{ filter: 'brightness(70%)' }}
+          src={`${BACKEND_HOST}/${userData.user.profilePhoto}`}
           alt="header"
-        /> */}
+        />
       </Box>
     </Box>
   );

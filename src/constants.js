@@ -1,3 +1,5 @@
+export const BACKEND_HOST = 'http://localhost:5000';
+
 export const AUTH_COMPONENTS = {
   STUDENT: 'STUDENT',
   RECRUITER: 'RECRUITER',

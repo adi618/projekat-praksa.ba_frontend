@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { BACKEND_HOST } from '../constants';
 
-const API = axios.create({ baseURL: 'http://localhost:5000/api' });
+const API = axios.create({ baseURL: `${BACKEND_HOST}/api` });
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem('token')) {

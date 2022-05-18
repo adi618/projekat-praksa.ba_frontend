@@ -14,13 +14,15 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AUTH_COMPONENTS, DRAWER } from '../constants';
 import { ROUTE_PATHS } from '../routes';
 import { setCurrentComponent } from '../features/authComponent';
+import { logout } from '../features/user';
 
 function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const userData = useSelector((state) => state.user);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -48,32 +50,41 @@ function Navigation() {
         <ListItemButton onClick={() => navigate(ROUTE_PATHS.HOME)}>
           <ListItemText primary="Pretraži oglase" />
         </ListItemButton>
-        <ListItemButton>
-          <ListItemText primary="Postavke" />
-        </ListItemButton>
       </List>
-      <Divider />
+      <Divider sx={{ bgcolor: 'white', mx: 4 }} />
       <List>
         <ListItem>
           <ListItemText
-            primary="Kompanija ste?"
+            primary={userData.isLoggedIn ? userData.user.companyName : 'Kompanija ste?'}
             primaryTypographyProps={{ variant: 'h6', fontWeight: 'medium' }}
           />
         </ListItem>
-        <ListItemButton onClick={() => {
-          dispatch(setCurrentComponent(AUTH_COMPONENTS.LOGIN));
-          navigate(ROUTE_PATHS.AUTH);
-        }}
-        >
-          <ListItemText primary="Prijavite se" />
-        </ListItemButton>
-        <ListItemButton onClick={() => {
-          dispatch(setCurrentComponent(AUTH_COMPONENTS.REGISTER));
-          navigate(ROUTE_PATHS.AUTH);
-        }}
-        >
-          <ListItemText primary="Registrujte se" />
-        </ListItemButton>
+        {userData.isLoggedIn
+          ? (
+            <ListItemButton onClick={() => {
+              dispatch(logout());
+            }}
+            >
+              <ListItemText primary="Odjavite se" />
+            </ListItemButton>
+          ) : (
+            <>
+              <ListItemButton onClick={() => {
+                dispatch(setCurrentComponent(AUTH_COMPONENTS.LOGIN));
+                navigate(ROUTE_PATHS.AUTH);
+              }}
+              >
+                <ListItemText primary="Prijavite se" />
+              </ListItemButton>
+              <ListItemButton onClick={() => {
+                dispatch(setCurrentComponent(AUTH_COMPONENTS.REGISTER));
+                navigate(ROUTE_PATHS.AUTH);
+              }}
+              >
+                <ListItemText primary="Registrujte se" />
+              </ListItemButton>
+            </>
+          )}
       </List>
     </>
   );
