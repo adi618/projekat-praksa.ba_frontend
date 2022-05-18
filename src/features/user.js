@@ -70,7 +70,7 @@ export const userSlice = createSlice({
       state.isLoggedIn = true;
       const { user, token } = action.payload;
       state.user = user;
-      localStorage.setItem('profile', token);
+      localStorage.setItem('token', token);
       state.error.isError = false;
       state.isLoading = false;
     },
@@ -88,7 +88,7 @@ export const userSlice = createSlice({
       state.isLoggedIn = true;
       const { user, accessToken } = action.payload;
       state.user = user;
-      localStorage.setItem('profile', accessToken);
+      localStorage.setItem('token', accessToken);
       state.error.isError = false;
       state.isLoading = false;
     },
@@ -106,7 +106,7 @@ export const userSlice = createSlice({
       state.isLoggedIn = true;
       const { user, accessToken } = action.payload;
       state.user = user;
-      localStorage.setItem('profile', accessToken);
+      localStorage.setItem('token', accessToken);
       state.error.isError = false;
       state.isLoading = false;
     },

@@ -1,8 +1,10 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { Button, Box, Typography } from '@mui/material';
-import { useDispatch } from 'react-redux';
+import {
+  Button, Box, Typography, CardMedia,
+} from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
 import { AUTH_COMPONENTS, REGEX } from '../../constants';
 import TextFieldComponent from '../../components/TextFieldComponent';
 import { signInUser } from '../../features/user';
@@ -18,13 +20,14 @@ const schema = yup.object({
 function LoginTab({ setCurrentComponent }) {
   const dispatch = useDispatch();
 
+  const userData = useSelector((state) => state.user);
+
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
   });
 
   const onSubmit = (data) => {
     dispatch(signInUser(data));
-    setCurrentComponent(AUTH_COMPONENTS.FINISHED);
   };
 
   return (
@@ -83,7 +86,7 @@ function LoginTab({ setCurrentComponent }) {
       <Box>
         {/* <CardMedia
           component="img"
-          image={authHeaderImage}
+          image={userData.user.profilePhoto}
           // sx={{ filter: 'brightness(70%)' }}
           alt="header"
         /> */}

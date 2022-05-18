@@ -10,10 +10,10 @@ import theme from './theme';
 function App() {
   const dispatch = useDispatch();
 
-  const profileToken = localStorage.getItem('profile');
+  const token = localStorage.getItem('token');
 
-  if (profileToken) {
-    dispatch(verifyTokenUser(profileToken));
+  if (token) {
+    dispatch(verifyTokenUser(token));
   }
 
   return (

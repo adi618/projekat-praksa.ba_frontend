@@ -4,9 +4,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Button, Box, CardMedia } from '@mui/material';
 import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateRounded';
+import { useDispatch } from 'react-redux';
 import { AUTH_COMPONENTS, REGEX } from '../../constants';
 import TextFieldComponent from '../../components/TextFieldComponent';
-import { signUp } from '../../api';
+import { signUpUser } from '../../features/user';
 
 const requiredErrorMessage = 'Obavezno polje';
 const invalidEmailErrorMessage = 'Nevažeća email adresa';
@@ -26,6 +27,7 @@ function RegisterTab({ setCurrentComponent }) {
   const [selectedFile, setSelectedFile] = useState();
   const [previewImage, setPreviewImage] = useState();
   const pictureUpload = useRef();
+  const dispatch = useDispatch();
 
   const uploadPictureRef = () => {
     pictureUpload.current.click();
@@ -43,16 +45,25 @@ function RegisterTab({ setCurrentComponent }) {
   });
 
   const onSubmit = (data) => {
-    console.log('backend call', data);
-    data.profilePicture = selectedFile;
-    signUp(data);
-    setCurrentComponent(AUTH_COMPONENTS.FINISHED);
+    const getFormData = (element) => Object.keys(element).reduce((formData, key) => {
+      formData.append(key, element[key]);
+      return formData;
+    }, new FormData());
+
+    const formData = getFormData(data);
+
+    formData.append('profilePicture', selectedFile);
+
+    dispatch(signUpUser(formData));
+    // setCurrentComponent(AUTH_COMPONENTS.FINISHED);
   };
 
   return (
     <>
       <Box
+        encType="multipart/form-data"
         component="form"
+        method="post"
         onSubmit={handleSubmit(onSubmit)}
         noValidate
         sx={{
@@ -65,6 +76,7 @@ function RegisterTab({ setCurrentComponent }) {
       >
         <input
           type="file"
+          name="file"
           style={{ display: 'none' }}
           onChange={fileSelectedHandler}
           ref={pictureUpload}
