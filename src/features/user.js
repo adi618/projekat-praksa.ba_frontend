@@ -16,7 +16,7 @@ export const verifyTokenUser = createAsyncThunk(
   async (token, { rejectWithValue }) => {
     try {
       const response = await verifyToken(token);
-      console.log(response);
+
       return response.data;
     } catch (err) {
       return rejectWithValue(err.message);
@@ -29,7 +29,7 @@ export const signUpUser = createAsyncThunk(
   async (user, { rejectWithValue }) => {
     try {
       const response = await signUp(user);
-      console.log(response);
+
       return response.data;
     } catch (err) {
       return rejectWithValue(err.message);
@@ -42,7 +42,7 @@ export const signInUser = createAsyncThunk(
   async (user, { rejectWithValue }) => {
     try {
       const response = await signIn(user);
-      console.log(response);
+
       return response.data;
     } catch (err) {
       return rejectWithValue(err.message);
@@ -87,9 +87,9 @@ export const userSlice = createSlice({
     },
     [signInUser.fulfilled]: (state, action) => {
       state.isLoggedIn = true;
-      const { user, accessToken } = action.payload;
+      const { user, token } = action.payload;
       state.user = user;
-      localStorage.setItem('token', accessToken);
+      localStorage.setItem('token', token);
       state.error.isError = false;
       state.isLoading = false;
     },
@@ -105,9 +105,9 @@ export const userSlice = createSlice({
     },
     [verifyTokenUser.fulfilled]: (state, action) => {
       state.isLoggedIn = true;
-      const { user, accessToken } = action.payload;
+      const { user, token } = action.payload;
       state.user = user;
-      localStorage.setItem('token', accessToken);
+      localStorage.setItem('token', token);
       state.error.isError = false;
       state.isLoading = false;
     },

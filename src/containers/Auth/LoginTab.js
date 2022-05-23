@@ -83,13 +83,13 @@ function LoginTab({ setCurrentComponent }) {
           Zaboravili ste lozinku?
         </Button>
       </Box>
-      <Box>
+      {/* <Box>
         <CardMedia
           component="img"
           src={`${BACKEND_HOST}/${userData.user.profilePhoto}`}
           alt="header"
         />
-      </Box>
+      </Box> */}
     </Box>
   );
 }

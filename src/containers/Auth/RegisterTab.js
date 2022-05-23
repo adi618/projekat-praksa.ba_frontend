@@ -20,7 +20,6 @@ const schema = yup.object({
   industry: yup.string().required(requiredErrorMessage),
   city: yup.string().required(requiredErrorMessage),
   address: yup.string().required(requiredErrorMessage),
-  phoneNumber: yup.string(),
 }).required();
 
 function RegisterTab({ setCurrentComponent }) {
@@ -173,12 +172,6 @@ function RegisterTab({ setCurrentComponent }) {
             width="66%"
           />
         </Box>
-        <TextFieldComponent
-          label="Broj telefona"
-          register={register}
-          name="phoneNumber"
-          errorMessage={errors.phoneNumber?.message}
-        />
         <Button
           type="submit"
           variant="primary"
