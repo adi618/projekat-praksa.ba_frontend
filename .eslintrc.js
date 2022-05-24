@@ -33,5 +33,6 @@ module.exports = {
     'no-unused-vars': 'warn',
     'react/prop-types': 0,
     'react/jsx-props-no-spreading': 0,
+    'no-underscore-dangle': 0,
   },
 };

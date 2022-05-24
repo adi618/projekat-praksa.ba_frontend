@@ -30,6 +30,9 @@ const primary500 = '#F3F3FF';
 const primary600 = '#E7E7FF';
 const primary800 = '#6363B1';
 
+const grey = 'rgba(0, 0, 0, 0.7)';
+const lightGrey = 'rgba(0, 0, 0, 0.5)';
+
 const accent500 = '#EAEAEA';
 const error = '#ff0000';
 
@@ -40,6 +43,7 @@ const customTheme = createTheme({
     primary: { main: primary800, 500: primary500, 600: primary600 },
     accent: { 500: accent500 },
     error: { main: error },
+    text: { grey, lightGrey },
   },
   typography: {
     htmlFontSize: 16,

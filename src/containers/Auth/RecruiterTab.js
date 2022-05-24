@@ -38,7 +38,7 @@ function RecruiterTab({ setCurrentComponent }) {
           variant="primary"
           onClick={() => setCurrentComponent(AUTH_COMPONENTS.REGISTER)}
         >
-          Registruj se kao firma
+          Registruj se
         </Button>
       </Box>
       <Box sx={{

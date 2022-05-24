@@ -5,7 +5,7 @@ import Post from './pages/Post';
 
 export const ROUTE_PATHS = {
   HOME: '/',
-  AUTH: '/pocetna',
+  AUTH: '/prijava',
   POST: '/praksa:id',
 };
 

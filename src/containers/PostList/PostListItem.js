@@ -1,9 +1,17 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, CardMedia } from '@mui/material';
 import { Link } from 'react-router-dom';
 import ArrowRightAltRoundedIcon from '@mui/icons-material/ArrowRightAltRounded';
+import { BACKEND_HOST } from '../../constants';
 
 function PostListItem({
-  id, title, image, imageAlt, location, shortDescription, description,
+  companyProfilePhoto,
+  companyName,
+  companyIndustry,
+  companyAddress,
+  companyCity,
+  postTitle,
+  postDescription,
+  postId,
 }) {
   return (
     <Box sx={{ borderRadius: 4, overflow: 'hidden', mt: 2 }}>
@@ -15,30 +23,32 @@ function PostListItem({
           color: 'white',
         }}
       >
-        <img
-          src={image}
-          alt={imageAlt}
-          height={70}
-          style={{ borderRadius: '50%', objectFit: 'cover' }}
-        />
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <CardMedia
+            component="img"
+            src={`${BACKEND_HOST}/${companyProfilePhoto}`}
+            alt="logo"
+            height={50}
+          />
+        </Box>
         <Box pl={1.5}>
           <Typography
             variant="h6"
-            sx={{ fontWeight: 'semiBold' }}
+            fontWeight="semiBold"
           >
-            {title}
+            {companyName}
           </Typography>
           <Typography
             variant="body1"
-            sx={{ fontWeight: 'semiBold' }}
+            fontWeight="semiBold"
           >
-            {title}
+            {companyIndustry}
           </Typography>
           <Typography
             variant="body2"
-            sx={{ fontWeight: 'light' }}
+            fontWeight="light"
           >
-            {location}
+            {`${companyAddress}, ${companyCity}`}
           </Typography>
         </Box>
       </Box>
@@ -46,17 +56,17 @@ function PostListItem({
         <Typography
           variant="body1"
         >
-          {shortDescription}
+          {postTitle}
         </Typography>
       </Box>
       <Box sx={{ bgcolor: 'primary.500', p: 1.5 }}>
         <Typography
           variant="body1"
         >
-          {description}
+          {postDescription}
         </Typography>
       </Box>
-      <Link to={`/praksa:${id}`}>
+      <Link to={`/praksa:${postId}`}>
         <Box sx={{
           bgcolor: 'accent.500',
           p: 1.5,
@@ -66,11 +76,12 @@ function PostListItem({
         >
           <Typography
             variant="body1"
-            sx={{ fontWeight: 'semiBold' }}
+            fontWeight="semiBold"
           >
             Pročitaj više
           </Typography>
           <ArrowRightAltRoundedIcon />
+          {/* TODO: vrijeme za prijavu je isteklo logic */}
         </Box>
       </Link>
     </Box>

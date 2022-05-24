@@ -44,11 +44,8 @@ function Navigation() {
             primaryTypographyProps={{ variant: 'h5', fontWeight: 'extraBold' }}
           />
         </ListItem>
-        <ListItemButton onClick={() => navigate(ROUTE_PATHS.AUTH)}>
-          <ListItemText primary="Početna" />
-        </ListItemButton>
         <ListItemButton onClick={() => navigate(ROUTE_PATHS.HOME)}>
-          <ListItemText primary="Pretraži oglase" />
+          <ListItemText primary="Početna" />
         </ListItemButton>
       </List>
       <Divider sx={{ bgcolor: 'white', mx: 4 }} />
