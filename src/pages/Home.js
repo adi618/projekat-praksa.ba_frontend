@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 import { getPosts } from '../api';
-import PostListItem from '../containers/PostList/PostListItem';
+import PostListItem from '../containers/PostListItem/PostListItem';
 
 function Home() {
   const [posts, setPosts] = useState([]);

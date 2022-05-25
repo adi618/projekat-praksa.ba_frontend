@@ -29,7 +29,7 @@ function LoginTab({ setCurrentComponent }) {
   const onSubmit = (data) => {
     dispatch(signInUser(data));
   };
-
+  // login email: kenan.genjac2019@size.ba
   return (
     <Box sx={{ width: '100%' }}>
       <Box

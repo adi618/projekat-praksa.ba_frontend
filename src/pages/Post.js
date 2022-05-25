@@ -1,35 +1,33 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Box, Typography, CardMedia } from '@mui/material';
-import ArrowRightAltRoundedIcon from '@mui/icons-material/ArrowRightAltRounded';
 import { getPost } from '../api';
 import { BACKEND_HOST } from '../constants';
+import DetailedPostListItem from '../containers/PostListItem/DetailedPostListItem';
 
 function Post() {
   const params = useParams();
 
-  const [data, setData] = useState([]);
+  const [post, setPost] = useState([]);
 
   useEffect(() => {
     (async () => {
       const response = await getPost(params.id.slice(1));
       console.log(response);
-      setData(response.data);
+      setPost(response.data);
     })();
   }, [params.id]);
 
   return (
     <>
       <Box
-        sx={{
-          bgcolor: 'primary.500',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          py: 3,
-        }}
+        bgcolor="primary.500"
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        py={3}
       >
-        <Box sx={{ width: '100px', py: 3 }}>
+        <Box width="100px" py={3}>
           <CardMedia
             component="img"
             src={`${BACKEND_HOST}/profilePictures/1653316691786profile.png`}
@@ -39,7 +37,7 @@ function Post() {
           />
         </Box>
         <Typography variant="h6" fontWeight="semiBold">
-          Politehnički fakultet
+          {post?.company?.companyName}
         </Typography>
         <Typography
           variant="body1"
@@ -47,48 +45,33 @@ function Post() {
           color="text.lightGrey"
           pb={3}
         >
-          Praksa za studente svih odsjeka
+          {post?.company?.industry}
         </Typography>
         <Typography variant="body2" color="text.grey">
-          ptf@unze.ba
+          {post?.company?.email}
         </Typography>
         <Typography variant="body2" color="text.grey" pb={3}>
-          Fakultetska 1, 72000 Zenica
+          {post?.company?.address}
+          ,
+          {' '}
+          {post?.company?.city}
         </Typography>
       </Box>
-      <Box bgcolor="primary.600" p={1.5} m={2}>
-        <Box bgcolor="primary.600" p={1.5}>
-          <Typography
-            variant="body1"
-          >
-            Prilika za pkom slitehničkog fakulteta u Zenici!
-          </Typography>
-        </Box>
-        <Box bgcolor="primary.500" p={1.5}>
-          <Typography
-            variant="body1"
-          >
-            Plitehnički
-          </Typography>
-        </Box>
-        <Link to={`/praksa:${params.id}`}>
-          <Box sx={{
-            bgcolor: 'accent.500',
-            p: 1.5,
-            display: 'flex',
-            justifyContent: 'space-between',
-          }}
-          >
-            <Typography
-              variant="body1"
-              sx={{ fontWeight: 'semiBold', textDecoration: 'none' }}
-            >
-              Prijavi se
-            </Typography>
-            <ArrowRightAltRoundedIcon />
-          </Box>
-        </Link>
-      </Box>
+      <DetailedPostListItem
+        companyProfilePhoto={post?.company?.profilePhoto}
+        companyName={post?.company?.companyName}
+        companyIndustry={post?.company?.industry}
+        companyAddress={post?.company?.address}
+        companyCity={post?.company?.city}
+        postTitle={post.title}
+        postDescription={post.description}
+        postId={post._id}
+        postIndustry={post.category}
+        postLocation={post.location}
+        postStartDate={post.startDate}
+        postEndDate={post.endDate}
+        postApplicationDue={post.applicationDue}
+      />
     </>
   );
 }
