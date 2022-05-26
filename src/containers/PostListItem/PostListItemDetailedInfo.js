@@ -16,7 +16,9 @@ function PostListItemDetailedInfo({
       </Box>
       <Box p={2} py={1.5}>
         <Typography color="text.lightGrey" fontWeight="semiBold" variant="caption">LOKACIJA</Typography>
-        <Typography>{postLocation}</Typography>
+        {postLocation?.map((location) => (
+          <Typography key={location}>{location}</Typography>
+        ))}
       </Box>
       <Box p={2} py={1.5}>
         <Typography color="text.lightGrey" fontWeight="semiBold" variant="caption">POČETAK</Typography>

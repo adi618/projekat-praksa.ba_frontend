@@ -1,18 +1,43 @@
-import { useEffect, useState } from 'react';
-import { Box } from '@mui/material';
-import { getPosts } from '../api';
+import { useState } from 'react';
+import {
+  Box, Button, CircularProgress, Typography,
+} from '@mui/material';
 import PostListItem from '../containers/PostListItem/PostListItem';
+import { useListPostsQuery } from '../services/posts';
 
 function Home() {
-  const [posts, setPosts] = useState([]);
+  const [page, setPage] = useState(1);
+  const { data: posts, isLoading, isFetching } = useListPostsQuery(page);
 
-  useEffect(() => {
-    (async () => {
-      const response = await getPosts();
-      console.log(response);
-      setPosts(response.data);
-    })();
-  }, []);
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '25%',
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (posts === undefined) {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '25%',
+        }}
+      >
+        <Typography>No posts found.</Typography>
+      </Box>
+    );
+  }
 
   return (
     <Box px={2}>
@@ -29,6 +54,10 @@ function Home() {
           postId={post._id}
         />
       ))}
+      <Box m={3} display="flex" justifyContent="space-between">
+        {page !== 1 ? <Button onClick={() => setPage(page - 1)}>Previous</Button> : <Box />}
+        <Button onClick={() => setPage(page + 1)}>Next</Button>
+      </Box>
     </Box>
   );
 }
