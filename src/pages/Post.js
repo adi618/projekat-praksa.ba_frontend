@@ -30,7 +30,7 @@ function Post() {
         <Box width="100px" py={3}>
           <CardMedia
             component="img"
-            src={`${BACKEND_HOST}/profilePictures/1653316691786profile.png`}
+            src={`${BACKEND_HOST}/${post?.company?.profilePhoto}`}
             alt="logo"
             height={100}
             width={100}

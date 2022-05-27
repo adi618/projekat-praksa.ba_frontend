@@ -7,7 +7,7 @@ import { useListPostsQuery } from '../services/posts';
 
 function Home() {
   const [page, setPage] = useState(1);
-  const { data: posts, isLoading, isFetching } = useListPostsQuery(page);
+  const { data, isLoading, isFetching } = useListPostsQuery(page);
 
   if (isLoading) {
     return (
@@ -24,7 +24,7 @@ function Home() {
     );
   }
 
-  if (posts === undefined) {
+  if (data === undefined) {
     return (
       <Box
         sx={{
@@ -38,6 +38,8 @@ function Home() {
       </Box>
     );
   }
+
+  const { results: posts } = data;
 
   return (
     <Box px={2}>
