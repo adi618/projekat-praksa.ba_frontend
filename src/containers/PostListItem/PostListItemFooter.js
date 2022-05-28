@@ -4,7 +4,7 @@ import ArrowRightAltRoundedIcon from '@mui/icons-material/ArrowRightAltRounded';
 
 function PostListItemFooter({ postId }) {
   return (
-    <Link to={`/praksa:${postId}`}>
+    <Link to={`/praksa/${postId}`}>
       <Box
         sx={{
           bgcolor: 'accent.500',

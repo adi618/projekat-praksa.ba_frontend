@@ -1,13 +1,11 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import {
-  Button, Box, Typography, CardMedia,
-} from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import { AUTH_COMPONENTS, BACKEND_HOST, REGEX } from '../../constants';
-import TextFieldComponent from '../../components/TextFieldComponent';
-import { signInUser } from '../../features/user';
+import { Button, Box, Typography } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { REGEX } from '../constants';
+import TextFieldComponent from '../components/TextFieldComponent';
+import { signInUser } from '../features/user';
 
 const requiredErrorMessage = 'Obavezno polje';
 const invalidEmailErrorMessage = 'Nevažeća email adresa';
@@ -17,10 +15,8 @@ const schema = yup.object({
   password: yup.string().required(requiredErrorMessage).min(5, 'Prekratka lozinka'),
 }).required();
 
-function LoginTab({ setCurrentComponent }) {
+function Login() {
   const dispatch = useDispatch();
-
-  const userData = useSelector((state) => state.user);
 
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
@@ -83,15 +79,8 @@ function LoginTab({ setCurrentComponent }) {
           Zaboravili ste lozinku?
         </Button>
       </Box>
-      {/* <Box>
-        <CardMedia
-          component="img"
-          src={`${BACKEND_HOST}/${userData.user.profilePhoto}`}
-          alt="header"
-        />
-      </Box> */}
     </Box>
   );
 }
 
-export default LoginTab;
+export default Login;

@@ -6,7 +6,7 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: `${BACKEND_HOST}/api/` }),
   endpoints: (builder) => ({
     listPosts: builder.query({
-      query: (page = 1) => `posts?page=${page}`,
+      query: (page = 1) => `posts?page=${page}&limit=10`,
     }),
   }),
 });

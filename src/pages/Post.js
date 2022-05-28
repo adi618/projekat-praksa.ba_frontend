@@ -12,11 +12,11 @@ function Post() {
 
   useEffect(() => {
     (async () => {
-      const response = await getPost(params.id.slice(1));
+      const response = await getPost(params.postId);
       console.log(response);
       setPost(response.data);
     })();
-  }, [params.id]);
+  }, [params.postId]);
 
   return (
     <>

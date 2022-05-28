@@ -15,9 +15,7 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { AUTH_COMPONENTS, DRAWER } from '../constants';
-import { ROUTE_PATHS } from '../routes';
-import { setCurrentComponent } from '../features/authComponent';
+import { DRAWER, ROUTE_PATHS } from '../constants';
 import { logout } from '../features/user';
 
 function Navigation() {
@@ -38,44 +36,51 @@ function Navigation() {
   const drawer = (
     <>
       <List>
-        <ListItem>
-          <ListItemText
-            primary="Praksa.ba"
-            primaryTypographyProps={{ variant: 'h5', fontWeight: 'extraBold' }}
-          />
-        </ListItem>
         <ListItemButton onClick={() => navigate(ROUTE_PATHS.HOME)}>
+          <ListItemText
+            primaryTypographyProps={{ variant: 'h5', fontWeight: 'extraBold' }}
+            primary="Praksa.ba"
+          />
+        </ListItemButton>
+        <ListItemButton onClick={() => navigate(ROUTE_PATHS.POST_LIST)}>
           <ListItemText primary="Početna" />
         </ListItemButton>
       </List>
-      <Divider sx={{ bgcolor: 'white', mx: 4 }} />
       <List>
-        <ListItem>
+        {/* <ListItem>
           <ListItemText
             primary={userData.isLoggedIn ? userData.user.companyName : 'Kompanija ste?'}
             primaryTypographyProps={{ variant: 'h6', fontWeight: 'medium' }}
           />
-        </ListItem>
+        </ListItem> */}
         {userData.isLoggedIn
           ? (
-            <ListItemButton onClick={() => {
-              dispatch(logout());
-            }}
-            >
+            <ListItemButton onClick={() => dispatch(logout())}>
               <ListItemText primary="Odjavite se" />
             </ListItemButton>
           ) : (
             <>
               <ListItemButton onClick={() => {
-                dispatch(setCurrentComponent(AUTH_COMPONENTS.LOGIN));
-                navigate(ROUTE_PATHS.AUTH);
+                navigate(ROUTE_PATHS.SEARCHING_FOR_INTERNSHIP);
+              }}
+              >
+                <ListItemText primary="Tražiš praksu?" />
+              </ListItemButton>
+              <Divider sx={{ bgcolor: 'white', mx: 4 }} />
+              <ListItemButton onClick={() => {
+                navigate(ROUTE_PATHS.OFFERING_INTERNSHIP);
+              }}
+              >
+                <ListItemText primary="Nudiš praksu?" />
+              </ListItemButton>
+              <ListItemButton onClick={() => {
+                navigate(ROUTE_PATHS.LOGIN);
               }}
               >
                 <ListItemText primary="Prijavite se" />
               </ListItemButton>
               <ListItemButton onClick={() => {
-                dispatch(setCurrentComponent(AUTH_COMPONENTS.REGISTER));
-                navigate(ROUTE_PATHS.AUTH);
+                navigate(ROUTE_PATHS.REGISTER);
               }}
               >
                 <ListItemText primary="Registrujte se" />

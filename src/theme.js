@@ -86,18 +86,6 @@ const customTheme = createTheme({
         },
       ],
     },
-    MuiBox: {
-      variants: [
-        {
-          props: { variant: 'topLeftBorderRadius' },
-          style: {
-            borderRadius: '16px 0 0 0',
-            overflow: 'hidden',
-            boxShadow: `0 0 0px 10px ${primary800}`,
-          },
-        },
-      ],
-    },
   },
 });
 

@@ -5,9 +5,9 @@ import * as yup from 'yup';
 import { Button, Box, CardMedia } from '@mui/material';
 import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateRounded';
 import { useDispatch } from 'react-redux';
-import { AUTH_COMPONENTS, REGEX } from '../../constants';
-import TextFieldComponent from '../../components/TextFieldComponent';
-import { signUpUser } from '../../features/user';
+import { REGEX } from '../constants';
+import TextFieldComponent from '../components/TextFieldComponent';
+import { signUpUser } from '../features/user';
 
 const requiredErrorMessage = 'Obavezno polje';
 const invalidEmailErrorMessage = 'Nevažeća email adresa';
@@ -22,7 +22,7 @@ const schema = yup.object({
   address: yup.string().required(requiredErrorMessage),
 }).required();
 
-function RegisterTab({ setCurrentComponent }) {
+function Register() {
   const [selectedFile, setSelectedFile] = useState();
   const [previewImage, setPreviewImage] = useState();
   const pictureUpload = useRef();
@@ -54,7 +54,6 @@ function RegisterTab({ setCurrentComponent }) {
     formData.append('profilePicture', selectedFile);
 
     dispatch(signUpUser(formData));
-    // setCurrentComponent(AUTH_COMPONENTS.FINISHED);
   };
 
   return (
@@ -185,4 +184,4 @@ function RegisterTab({ setCurrentComponent }) {
   );
 }
 
-export default RegisterTab;
+export default Register;

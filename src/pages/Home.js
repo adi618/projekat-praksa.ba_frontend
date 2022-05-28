@@ -1,65 +1,41 @@
-import { useState } from 'react';
 import {
-  Box, Button, CircularProgress, Typography,
+  Box, Typography, Button, Divider,
 } from '@mui/material';
-import PostListItem from '../containers/PostListItem/PostListItem';
-import { useListPostsQuery } from '../services/posts';
+
+import { useNavigate } from 'react-router-dom';
+import { ROUTE_PATHS } from '../constants';
 
 function Home() {
-  const [page, setPage] = useState(1);
-  const { data, isLoading, isFetching } = useListPostsQuery(page);
-
-  if (isLoading) {
-    return (
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '25%',
-        }}
-      >
-        <CircularProgress />
-      </Box>
-    );
-  }
-
-  if (data === undefined) {
-    return (
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '25%',
-        }}
-      >
-        <Typography>No posts found.</Typography>
-      </Box>
-    );
-  }
-
-  const { results: posts } = data;
-
+  const navigate = useNavigate();
   return (
-    <Box px={2}>
-      {posts.map((post) => (
-        <PostListItem
-          key={post._id}
-          companyProfilePhoto={post.company.profilePhoto}
-          companyName={post.company.companyName}
-          companyIndustry={post.company.industry}
-          companyAddress={post.company.address}
-          companyCity={post.company.city}
-          postTitle={post.title}
-          postDescription={post.description}
-          postId={post._id}
-        />
-      ))}
-      <Box m={3} display="flex" justifyContent="space-between">
-        {page !== 1 ? <Button onClick={() => setPage(page - 1)}>Previous</Button> : <Box />}
-        <Button onClick={() => setPage(page + 1)}>Next</Button>
-      </Box>
+    <Box sx={{ width: '100%', textAlign: 'center' }}>
+      <Typography
+        variant="body2"
+        color="text.lightGrey"
+        fontWeight="semiBold"
+      >
+        Student si?
+      </Typography>
+      <Button
+        variant="primary"
+        onClick={() => navigate(ROUTE_PATHS.SEARCHING_FOR_INTERNSHIP)}
+      >
+        Tražis praksu?
+      </Button>
+      <Divider sx={{ mx: '15%' }} />
+      <Typography
+        variant="body2"
+        fontWeight="semiBold"
+        color="text.lightGrey"
+      >
+        Kompanija ste?
+      </Typography>
+      <Button
+        variant="primary"
+        onClick={() => navigate(ROUTE_PATHS.OFFERING_INTERNSHIP)}
+      >
+        Nudite praksu?
+      </Button>
     </Box>
   );
 }
