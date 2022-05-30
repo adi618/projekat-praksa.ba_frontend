@@ -6,12 +6,17 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import authHeaderImage from '../assets/images/authHeaderImage.jpg';
+import { ROUTE_PATHS } from '../constants';
 import Footer from '../containers/Footer';
 
 function NotLoggedInLayout() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const isWiderThanMd = useMediaQuery((theme) => theme.breakpoints.up('md'));
+
   return (
     <Box
       sx={(theme) => ({
@@ -83,16 +88,16 @@ function NotLoggedInLayout() {
             })}
           >
             <Button
-              // onClick={() => {}}
-              // disabled={}
-              sx={{ color: 'rgba(255, 255, 255, 0.5)' }}
+              onClick={() => navigate(ROUTE_PATHS.SEARCHING_FOR_INTERNSHIP)}
+              disabled={location.pathname === ROUTE_PATHS.SEARCHING_FOR_INTERNSHIP}
+              sx={{ color: 'text.500' }}
             >
               Tražiš praksu?
             </Button>
             <Button
-              // onClick={() => {}}
-              // disabled={}
-              sx={{ color: 'rgba(255, 255, 255, 0.5)' }}
+              onClick={() => navigate(ROUTE_PATHS.OFFERING_INTERNSHIP)}
+              disabled={location.pathname === ROUTE_PATHS.OFFERING_INTERNSHIP}
+              sx={{ color: 'text.500' }}
             >
               Nudiš praksu?
             </Button>

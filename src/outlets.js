@@ -6,5 +6,5 @@ import { ROUTE_PATHS } from './constants';
 export function NotLoggedInOutlet() {
   const userData = useSelector((state) => state.user);
 
-  return !userData.isLoggedIn ? <NotLoggedInLayout /> : <Navigate to={ROUTE_PATHS.HOME} />;
+  return !userData.isLoggedIn ? <NotLoggedInLayout /> : <Navigate to={ROUTE_PATHS.POST_LIST} />;
 }

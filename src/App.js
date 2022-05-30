@@ -18,6 +18,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import NavigationLayout from './layouts/NavigationLayout';
 import PostList from './pages/PostList';
+import Company from './pages/Company';
 
 function App() {
   const dispatch = useDispatch();
@@ -51,7 +52,8 @@ function App() {
             </Route>
             <Route path={ROUTE_PATHS.POST_LIST} element={<PostList />} exact />
             <Route path={`${ROUTE_PATHS.POST}/:postId`} element={<Post />} exact />
-            <Route path="*" element={<Navigate to="/" />} />
+            <Route path={`${ROUTE_PATHS.COMPANY}/:companyId`} element={<Company />} exact />
+            {/* <Route path="*" element={<Navigate to="/" />} /> */}
           </Route>
         </Routes>
       </BrowserRouter>

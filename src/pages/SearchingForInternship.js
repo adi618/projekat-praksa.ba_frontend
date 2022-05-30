@@ -16,14 +16,14 @@ function SearchingForInternship() {
       </Typography>
       <Typography
         variant="body2"
-        color="text.lightGrey"
+        color="text.700"
         fontWeight="semiBold"
       >
         Student si?
       </Typography>
       <Typography
         variant="body2"
-        color="text.lightGrey"
+        color="text.700"
         fontWeight="semiBold"
         my={1}
       >
@@ -31,7 +31,7 @@ function SearchingForInternship() {
       </Typography>
       <Typography
         variant="body2"
-        color="text.lightGrey"
+        color="text.700"
         fontWeight="semiBold"
         mb={3}
       >

@@ -16,3 +16,5 @@ export const signUp = (formData) => API.post('/register', formData);
 export const verifyToken = (token) => API.get('/verify-token', token);
 export const getPosts = () => API.get('/posts');
 export const getPost = (id) => API.get(`/posts/${id}`);
+export const getCompany = (id) => API.get(`/companies/${id}`);
+export const getPostsByCompanyId = (id) => API.get(`/posts?id=${id}`);

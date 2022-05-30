@@ -36,13 +36,23 @@ function Navigation() {
   const drawer = (
     <>
       <List>
-        <ListItemButton onClick={() => navigate(ROUTE_PATHS.HOME)}>
+        <ListItemButton
+          onClick={() => {
+            navigate(ROUTE_PATHS.HOME);
+            handleDrawerToggle();
+          }}
+        >
           <ListItemText
             primaryTypographyProps={{ variant: 'h5', fontWeight: 'extraBold' }}
             primary="Praksa.ba"
           />
         </ListItemButton>
-        <ListItemButton onClick={() => navigate(ROUTE_PATHS.POST_LIST)}>
+        <ListItemButton
+          onClick={() => {
+            navigate(ROUTE_PATHS.POST_LIST);
+            handleDrawerToggle();
+          }}
+        >
           <ListItemText primary="Početna" />
         </ListItemButton>
       </List>
@@ -55,33 +65,46 @@ function Navigation() {
         </ListItem> */}
         {userData.isLoggedIn
           ? (
-            <ListItemButton onClick={() => dispatch(logout())}>
+            <ListItemButton
+              onClick={() => {
+                dispatch(logout());
+                handleDrawerToggle();
+              }}
+            >
               <ListItemText primary="Odjavite se" />
             </ListItemButton>
           ) : (
             <>
-              <ListItemButton onClick={() => {
-                navigate(ROUTE_PATHS.SEARCHING_FOR_INTERNSHIP);
-              }}
+              <ListItemButton
+                onClick={() => {
+                  navigate(ROUTE_PATHS.SEARCHING_FOR_INTERNSHIP);
+                  handleDrawerToggle();
+                }}
               >
                 <ListItemText primary="Tražiš praksu?" />
               </ListItemButton>
               <Divider sx={{ bgcolor: 'white', mx: 4 }} />
-              <ListItemButton onClick={() => {
-                navigate(ROUTE_PATHS.OFFERING_INTERNSHIP);
-              }}
+              <ListItemButton
+                onClick={() => {
+                  navigate(ROUTE_PATHS.OFFERING_INTERNSHIP);
+                  handleDrawerToggle();
+                }}
               >
                 <ListItemText primary="Nudiš praksu?" />
               </ListItemButton>
-              <ListItemButton onClick={() => {
-                navigate(ROUTE_PATHS.LOGIN);
-              }}
+              <ListItemButton
+                onClick={() => {
+                  navigate(ROUTE_PATHS.LOGIN);
+                  handleDrawerToggle();
+                }}
               >
                 <ListItemText primary="Prijavite se" />
               </ListItemButton>
-              <ListItemButton onClick={() => {
-                navigate(ROUTE_PATHS.REGISTER);
-              }}
+              <ListItemButton
+                onClick={() => {
+                  navigate(ROUTE_PATHS.REGISTER);
+                  handleDrawerToggle();
+                }}
               >
                 <ListItemText primary="Registrujte se" />
               </ListItemButton>
@@ -114,7 +137,7 @@ function Navigation() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" sx={{ flexGrow: 1, color: 'black' }}>
-            News
+            Praksa.ba
           </Typography>
         </Toolbar>
       </AppBar>

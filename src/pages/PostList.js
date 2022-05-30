@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import {
-  Box, Button, CircularProgress, Typography,
+  Box,
+  Button,
+  CircularProgress,
+  Typography,
 } from '@mui/material';
 import PostListItem from '../containers/PostListItem/PostListItem';
 import { useListPostsQuery } from '../services/posts';
 
 function PostList() {
   const [page, setPage] = useState(1);
-  const { data, isLoading } = useListPostsQuery(page);
+  const { data, isLoading } = useListPostsQuery({ page });
 
   if (isLoading) {
     return (
@@ -46,6 +49,7 @@ function PostList() {
       {posts.map((post) => (
         <PostListItem
           key={post._id}
+          companyId={post.company._id}
           companyProfilePhoto={post.company.profilePhoto}
           companyName={post.company.companyName}
           companyIndustry={post.company.industry}

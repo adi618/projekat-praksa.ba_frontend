@@ -4,6 +4,7 @@ import PostListItemHeader from './PostListItemHeader';
 import PostListItemMainInfo from './PostListItemMainInfo';
 
 function PostListItem({
+  companyId,
   companyProfilePhoto,
   companyName,
   companyIndustry,
@@ -16,6 +17,7 @@ function PostListItem({
   return (
     <Box sx={{ borderRadius: 4, overflow: 'hidden', m: 3 }}>
       <PostListItemHeader
+        companyId={companyId}
         companyProfilePhoto={companyProfilePhoto}
         companyName={companyName}
         companyIndustry={companyIndustry}

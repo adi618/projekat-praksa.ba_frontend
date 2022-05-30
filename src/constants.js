@@ -12,6 +12,7 @@ export const ROUTE_PATHS = {
   HOME: '/',
   POST: '/praksa',
   POST_LIST: '/prakse',
+  COMPANY: '/firma',
   SEARCHING_FOR_INTERNSHIP: '/trazis-praksu',
   OFFERING_INTERNSHIP: '/nudis-praksu',
   LOGIN: '/prijava',

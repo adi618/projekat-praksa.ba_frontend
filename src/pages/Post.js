@@ -4,6 +4,7 @@ import { Box, Typography, CardMedia } from '@mui/material';
 import { getPost } from '../api';
 import { BACKEND_HOST } from '../constants';
 import DetailedPostListItem from '../containers/PostListItem/DetailedPostListItem';
+import CompanyInfo from '../components/CompanyInfo';
 
 function Post() {
   const params = useParams();
@@ -13,51 +14,29 @@ function Post() {
   useEffect(() => {
     (async () => {
       const response = await getPost(params.postId);
-      console.log(response);
+
       setPost(response.data);
     })();
   }, [params.postId]);
+  //  companyProfilePhoto,
+  // companyName,
+  // companyIndustry,
+  // companyEmail,
+  // companyAddress,
+  // companyCity,
 
   return (
     <>
-      <Box
-        bgcolor="primary.500"
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        py={3}
-      >
-        <Box width="100px" py={3}>
-          <CardMedia
-            component="img"
-            src={`${BACKEND_HOST}/${post?.company?.profilePhoto}`}
-            alt="logo"
-            height={100}
-            width={100}
-          />
-        </Box>
-        <Typography variant="h6" fontWeight="semiBold">
-          {post?.company?.companyName}
-        </Typography>
-        <Typography
-          variant="body1"
-          fontWeight="semiBold"
-          color="text.lightGrey"
-          pb={3}
-        >
-          {post?.company?.industry}
-        </Typography>
-        <Typography variant="body2" color="text.grey">
-          {post?.company?.email}
-        </Typography>
-        <Typography variant="body2" color="text.grey" pb={3}>
-          {post?.company?.address}
-          ,
-          {' '}
-          {post?.company?.city}
-        </Typography>
-      </Box>
+      <CompanyInfo
+        companyProfilePhoto={post?.company?.profilePhoto}
+        companyName={post?.company?.companyName}
+        companyIndustry={post?.company?.industry}
+        companyEmail={post?.company?.email}
+        companyAddress={post?.company?.address}
+        companyCity={post?.company?.city}
+      />
       <DetailedPostListItem
+        companyId={post?.company?._id}
         companyProfilePhoto={post?.company?.profilePhoto}
         companyName={post?.company?.companyName}
         companyIndustry={post?.company?.industry}

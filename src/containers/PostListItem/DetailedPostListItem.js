@@ -1,10 +1,11 @@
 import { Box } from '@mui/material';
+import PostListItemDetailedFooter from './PostListItemDetailedFooter';
 import PostListItemDetailedInfo from './PostListItemDetailedInfo';
-import PostListItemFooter from './PostListItemFooter';
 import PostListItemHeader from './PostListItemHeader';
 import PostListItemMainInfo from './PostListItemMainInfo';
 
 function DetailedPostListItem({
+  companyId,
   companyProfilePhoto,
   companyName,
   companyIndustry,
@@ -22,6 +23,7 @@ function DetailedPostListItem({
   return (
     <Box sx={{ borderRadius: 4, overflow: 'hidden', m: 3 }}>
       <PostListItemHeader
+        companyId={companyId}
         companyProfilePhoto={companyProfilePhoto}
         companyName={companyName}
         companyIndustry={companyIndustry}
@@ -39,7 +41,7 @@ function DetailedPostListItem({
         postEndDate={postEndDate}
         postApplicationDue={postApplicationDue}
       />
-      <PostListItemFooter postId={postId} />
+      <PostListItemDetailedFooter postId={postId} />
     </Box>
   );
 }
