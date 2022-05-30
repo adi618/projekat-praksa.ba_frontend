@@ -96,7 +96,11 @@ function NotLoggedInLayout() {
             </Button>
             <Button
               onClick={() => navigate(ROUTE_PATHS.OFFERING_INTERNSHIP)}
-              disabled={location.pathname === ROUTE_PATHS.OFFERING_INTERNSHIP}
+              disabled={
+                location.pathname === ROUTE_PATHS.OFFERING_INTERNSHIP
+                || location.pathname === ROUTE_PATHS.LOGIN
+                || location.pathname === ROUTE_PATHS.REGISTER
+                }
               sx={{ color: 'text.500' }}
             >
               Nudiš praksu?

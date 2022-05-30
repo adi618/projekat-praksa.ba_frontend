@@ -6,7 +6,6 @@ import {
   Typography,
   Divider,
   List,
-  ListItem,
   ListItemText,
   Drawer,
   Box,
