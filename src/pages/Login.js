@@ -82,11 +82,6 @@ function Login() {
         >
           Zaboravili ste lozinku?
         </Button>
-        {userData.error.isError && (
-        <Typography color="red" mt={2}>
-          {userData.error.message}
-        </Typography>
-        )}
       </Box>
     </Box>
   );

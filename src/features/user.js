@@ -1,5 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { signIn, signUp, verifyToken } from '../api';
+import { setSnackbar } from './snackbar';
+import { AUTHENTICATION_TYPE, SNACKBAR_VARIANTS } from '../constants';
+
+const { LOGIN, REGISTER } = AUTHENTICATION_TYPE;
 
 const initialState = {
   isLoggedIn: false,
@@ -9,6 +13,61 @@ const initialState = {
     message: '',
   },
   isLoading: false,
+};
+
+const authenticate = async (user, { rejectWithValue, dispatch }, type) => {
+  try {
+    let response;
+    if (type === LOGIN) {
+      response = await signIn(user);
+    } else if (type === 'register') {
+      response = await signUp(user);
+    } else {
+      throw new Error();
+    }
+    dispatch(setSnackbar({
+      isVisible: true,
+      message: `Uspješno ste se ${
+        type === LOGIN ? 'prijavili!' : 'registrovali!'
+      }`,
+      variant: SNACKBAR_VARIANTS.SUCCESS,
+    }));
+
+    return response.data;
+  } catch (err) {
+    let errorMessage;
+    if (err?.response?.request?.responseText) {
+      errorMessage = JSON.parse(err?.response?.request?.responseText)?.message;
+    }
+    dispatch(setSnackbar({
+      isVisible: true,
+      message: errorMessage,
+      variant: SNACKBAR_VARIANTS.ERROR,
+    }));
+    return rejectWithValue(errorMessage);
+  }
+};
+
+const authenticateFulfilled = (state, action) => {
+  state.isLoggedIn = true;
+  const { user, token } = action.payload;
+  state.user = user;
+  localStorage.setItem('token', token);
+  state.error.isError = false;
+  state.isLoading = false;
+};
+
+const authenticatePending = (state) => {
+  state.isLoggedIn = false;
+  state.isLoading = true;
+  state.error.isError = false;
+};
+
+const authenticateRejected = (state, action) => {
+  state.isLoggedIn = false;
+  state.error.message = action.payload;
+  state.error.isError = true;
+  state.isLoading = false;
 };
 
 export const verifyTokenUser = createAsyncThunk(
@@ -26,28 +85,20 @@ export const verifyTokenUser = createAsyncThunk(
 
 export const signUpUser = createAsyncThunk(
   'user/signUp',
-  async (user, { rejectWithValue }) => {
-    try {
-      const response = await signUp(user);
-
-      return response.data;
-    } catch (err) {
-      return rejectWithValue(JSON.parse(err.response.request.responseText).message);
-    }
-  },
+  async (user, { rejectWithValue, dispatch }) => authenticate(
+    user,
+    { rejectWithValue, dispatch },
+    REGISTER,
+  ),
 );
 
 export const signInUser = createAsyncThunk(
   'user/signIn',
-  async (user, { rejectWithValue }) => {
-    try {
-      const response = await signIn(user);
-
-      return response.data;
-    } catch (err) {
-      return rejectWithValue(JSON.parse(err.response.request.responseText).message);
-    }
-  },
+  async (user, { rejectWithValue, dispatch }) => authenticate(
+    user,
+    { rejectWithValue, dispatch },
+    LOGIN,
+  ),
 );
 
 export const userSlice = createSlice({
@@ -63,54 +114,14 @@ export const userSlice = createSlice({
     },
   },
   extraReducers: {
-    [signUpUser.pending]: (state) => {
-      state.isLoggedIn = false;
-      state.isLoading = true;
-    },
-    [signUpUser.fulfilled]: (state, action) => {
-      state.isLoggedIn = true;
-      const { user, token } = action.payload;
-      state.user = user;
-      localStorage.setItem('token', token);
-      state.error.isError = false;
-      state.isLoading = false;
-    },
-    [signUpUser.rejected]: (state, action) => {
-      state.isLoggedIn = false;
-      state.error.message = action.payload;
-      state.error.isError = true;
-      state.isLoading = false;
-    },
-    [signInUser.pending]: (state) => {
-      state.isLoggedIn = false;
-      state.isLoading = true;
-    },
-    [signInUser.fulfilled]: (state, action) => {
-      state.isLoggedIn = true;
-      const { user, token } = action.payload;
-      state.user = user;
-      localStorage.setItem('token', token);
-      state.error.isError = false;
-      state.isLoading = false;
-    },
-    [signInUser.rejected]: (state, action) => {
-      state.isLoggedIn = false;
-      state.error.message = action.payload;
-      state.error.isError = true;
-      state.isLoading = false;
-    },
-    [verifyTokenUser.pending]: (state) => {
-      state.isLoggedIn = false;
-      state.isLoading = true;
-    },
-    [verifyTokenUser.fulfilled]: (state, action) => {
-      state.isLoggedIn = true;
-      const { user, token } = action.payload;
-      state.user = user;
-      localStorage.setItem('token', token);
-      state.error.isError = false;
-      state.isLoading = false;
-    },
+    [signUpUser.fulfilled]: authenticateFulfilled,
+    [signUpUser.pending]: authenticatePending,
+    [signUpUser.rejected]: authenticateRejected,
+    [signInUser.fulfilled]: authenticateFulfilled,
+    [signInUser.pending]: authenticatePending,
+    [signInUser.rejected]: authenticateRejected,
+    [verifyTokenUser.fulfilled]: authenticateFulfilled,
+    [verifyTokenUser.pending]: authenticatePending,
     [verifyTokenUser.rejected]: (state) => {
       state.isLoggedIn = false;
       state.isLoading = false;

@@ -1,4 +1,4 @@
-import { ThemeProvider, CssBaseline, Box } from '@mui/material';
+import { ThemeProvider, CssBaseline } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import {
   BrowserRouter,

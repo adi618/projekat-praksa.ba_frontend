@@ -18,3 +18,15 @@ export const ROUTE_PATHS = {
   LOGIN: '/prijava',
   REGISTER: '/registracija',
 };
+
+export const AUTHENTICATION_TYPE = {
+  LOGIN: 'login',
+  REGISTER: 'register',
+};
+
+export const SNACKBAR_VARIANTS = {
+  ERROR: 'error',
+  WARNING: 'warning',
+  INFO: 'info',
+  SUCCESS: 'success',
+};
