@@ -11,6 +11,7 @@ import {
   Drawer,
   Box,
   ListItemButton,
+  useMediaQuery,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -26,6 +27,7 @@ function Navigation() {
   const dispatch = useDispatch();
   const location = useLocation();
   const isLandingPage = location.pathname === ROUTE_PATHS.AUTH;
+  const isWiderThanMd = useMediaQuery((theme) => theme.breakpoints.up('md'));
   // we don't want the mobile navigation showing on the landing page
   // landing page aka login/register (auth) page
 
@@ -39,7 +41,7 @@ function Navigation() {
         <ListItemButton
           onClick={() => {
             navigate(ROUTE_PATHS.HOME);
-            handleDrawerToggle();
+            if (!isWiderThanMd) handleDrawerToggle();
           }}
         >
           <ListItemText
@@ -50,7 +52,7 @@ function Navigation() {
         <ListItemButton
           onClick={() => {
             navigate(ROUTE_PATHS.POST_LIST);
-            handleDrawerToggle();
+            if (!isWiderThanMd) handleDrawerToggle();
           }}
         >
           <ListItemText primary="Početna" />
@@ -68,7 +70,7 @@ function Navigation() {
             <ListItemButton
               onClick={() => {
                 dispatch(logout());
-                handleDrawerToggle();
+                if (!isWiderThanMd) handleDrawerToggle();
               }}
             >
               <ListItemText primary="Odjavite se" />
@@ -78,7 +80,7 @@ function Navigation() {
               <ListItemButton
                 onClick={() => {
                   navigate(ROUTE_PATHS.SEARCHING_FOR_INTERNSHIP);
-                  handleDrawerToggle();
+                  if (!isWiderThanMd) handleDrawerToggle();
                 }}
               >
                 <ListItemText primary="Tražiš praksu?" />
@@ -87,7 +89,7 @@ function Navigation() {
               <ListItemButton
                 onClick={() => {
                   navigate(ROUTE_PATHS.OFFERING_INTERNSHIP);
-                  handleDrawerToggle();
+                  if (!isWiderThanMd) handleDrawerToggle();
                 }}
               >
                 <ListItemText primary="Nudiš praksu?" />
@@ -95,7 +97,7 @@ function Navigation() {
               <ListItemButton
                 onClick={() => {
                   navigate(ROUTE_PATHS.LOGIN);
-                  handleDrawerToggle();
+                  if (!isWiderThanMd) handleDrawerToggle();
                 }}
               >
                 <ListItemText primary="Prijavite se" />
@@ -103,7 +105,7 @@ function Navigation() {
               <ListItemButton
                 onClick={() => {
                   navigate(ROUTE_PATHS.REGISTER);
-                  handleDrawerToggle();
+                  if (!isWiderThanMd) handleDrawerToggle();
                 }}
               >
                 <ListItemText primary="Registrujte se" />
