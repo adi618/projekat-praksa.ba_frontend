@@ -44,7 +44,7 @@ const customTheme = createTheme({
     primary: { main: primary800, 500: primary500, 600: primary600 },
     accent: { 500: accent500 },
     error: { main: error },
-    text: { 500: grey500, 700: grey700, 800: grey800 },
+    text: { grey: { 500: grey500, 700: grey700, 800: grey800 } },
   },
   typography: {
     htmlFontSize: 16,

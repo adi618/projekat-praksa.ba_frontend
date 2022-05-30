@@ -11,25 +11,25 @@ function PostListItemDetailedInfo({
   return (
     <Box bgcolor="primary.600">
       <Box p={2} pb={1.5}>
-        <Typography color="text.700" fontWeight="semiBold" variant="caption">INDUSTRIJA</Typography>
+        <Typography color="text.grey.700" fontWeight="semiBold" variant="caption">INDUSTRIJA</Typography>
         <Typography>{postIndustry}</Typography>
       </Box>
       <Box p={2} py={1.5}>
-        <Typography color="text.700" fontWeight="semiBold" variant="caption">LOKACIJA</Typography>
+        <Typography color="text.grey.700" fontWeight="semiBold" variant="caption">LOKACIJA</Typography>
         {postLocation?.map((location) => (
           <Typography key={location}>{location}</Typography>
         ))}
       </Box>
       <Box p={2} py={1.5}>
-        <Typography color="text.700" fontWeight="semiBold" variant="caption">POČETAK</Typography>
+        <Typography color="text.grey.700" fontWeight="semiBold" variant="caption">POČETAK</Typography>
         <Typography>{postStartDate && new Date(postStartDate).toDateString()}</Typography>
       </Box>
       <Box p={2} py={1.5}>
-        <Typography color="text.700" fontWeight="semiBold" variant="caption">KRAJ</Typography>
+        <Typography color="text.grey.700" fontWeight="semiBold" variant="caption">KRAJ</Typography>
         <Typography>{postEndDate && new Date(postEndDate).toDateString()}</Typography>
       </Box>
       <Box p={2} pt={1.5}>
-        <Typography color="text.700" fontWeight="semiBold" variant="caption">ROK ZA PRIJAVU</Typography>
+        <Typography color="text.grey.700" fontWeight="semiBold" variant="caption">ROK ZA PRIJAVU</Typography>
         <Typography>{postApplicationDue && new Date(postApplicationDue).toDateString()}</Typography>
       </Box>
     </Box>

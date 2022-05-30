@@ -32,15 +32,15 @@ function CompanyInfo({
       <Typography
         variant="body1"
         fontWeight="semiBold"
-        color="text.700"
+        color="text.grey.700"
         pb={3}
       >
         {companyIndustry}
       </Typography>
-      <Typography variant="body2" color="text.800">
+      <Typography variant="body2" color="text.grey.800">
         {companyEmail}
       </Typography>
-      <Typography variant="body2" color="text.800" pb={3}>
+      <Typography variant="body2" color="text.grey.800" pb={3}>
         {companyAddress}
         ,
         {' '}

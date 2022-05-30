@@ -16,14 +16,14 @@ function OfferingInternship() {
         </Typography>
         <Typography
           variant="body2"
-          color="text.700"
+          color="text.grey.700"
           fontWeight="semiBold"
         >
           Želiš postati dio zajednice praksa.ba kao firma
         </Typography>
         <Typography
           variant="body2"
-          color="text.700"
+          color="text.grey.700"
           fontWeight="semiBold"
           my={1}
         >
@@ -31,7 +31,7 @@ function OfferingInternship() {
         </Typography>
         <Typography
           variant="body2"
-          color="text.700"
+          color="text.grey.700"
           fontWeight="semiBold"
           mb={3}
         >
@@ -55,7 +55,7 @@ function OfferingInternship() {
         <Typography
           variant="body2"
           fontWeight="semiBold"
-          color="text.700"
+          color="text.grey.700"
         >
           Imate račun? Prijavite se.
         </Typography>

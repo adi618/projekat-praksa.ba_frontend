@@ -81,6 +81,7 @@ function Company() {
           postTitle={post.title}
           postDescription={post.description}
           postId={post._id}
+          isPostExpired={new Date(post.applicationDue) < new Date()}
         />
       ))}
     </>

@@ -14,7 +14,7 @@ function PostListItemDetailedFooter({ postId, isPostExpired }) {
         justifyContent: 'space-between',
         cursor: isPostExpired ? '' : 'pointer',
       }}
-      onClick={isPostExpired ? null : () => navigate(`${ROUTE_PATHS.POST}/${postId}`)}
+      // onClick={isPostExpired ? null : () => navigate(`${ROUTE_PATHS.POST}/${postId}`)}
       // TODO: change onClick function
     >
       {isPostExpired ? (

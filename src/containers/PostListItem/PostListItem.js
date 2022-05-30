@@ -13,6 +13,7 @@ function PostListItem({
   postTitle,
   postDescription,
   postId,
+  isPostExpired,
 }) {
   return (
     <Box sx={{ borderRadius: 4, overflow: 'hidden', m: 3 }}>
@@ -28,7 +29,7 @@ function PostListItem({
         postTitle={postTitle}
         postDescription={postDescription}
       />
-      <PostListItemFooter postId={postId} />
+      <PostListItemFooter postId={postId} isPostExpired={isPostExpired} />
     </Box>
   );
 }

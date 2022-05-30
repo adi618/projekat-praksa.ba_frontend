@@ -50,6 +50,7 @@ function Post() {
         postStartDate={post.startDate}
         postEndDate={post.endDate}
         postApplicationDue={post.applicationDue}
+        isPostExpired={new Date(post.applicationDue) < new Date()}
       />
     </>
   );

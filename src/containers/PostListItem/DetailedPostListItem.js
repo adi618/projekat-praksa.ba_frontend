@@ -19,6 +19,7 @@ function DetailedPostListItem({
   postStartDate,
   postEndDate,
   postApplicationDue,
+  isPostExpired,
 }) {
   return (
     <Box sx={{ borderRadius: 4, overflow: 'hidden', m: 3 }}>
@@ -41,7 +42,7 @@ function DetailedPostListItem({
         postEndDate={postEndDate}
         postApplicationDue={postApplicationDue}
       />
-      <PostListItemDetailedFooter postId={postId} />
+      <PostListItemDetailedFooter postId={postId} isPostExpired={isPostExpired} />
     </Box>
   );
 }

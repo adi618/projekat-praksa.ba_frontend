@@ -90,7 +90,7 @@ function NotLoggedInLayout() {
             <Button
               onClick={() => navigate(ROUTE_PATHS.SEARCHING_FOR_INTERNSHIP)}
               disabled={location.pathname === ROUTE_PATHS.SEARCHING_FOR_INTERNSHIP}
-              sx={{ color: 'text.500' }}
+              sx={{ color: 'text.grey.500' }}
             >
               Tražiš praksu?
             </Button>
@@ -101,7 +101,7 @@ function NotLoggedInLayout() {
                 || location.pathname === ROUTE_PATHS.LOGIN
                 || location.pathname === ROUTE_PATHS.REGISTER
                 }
-              sx={{ color: 'text.500' }}
+              sx={{ color: 'text.grey.500' }}
             >
               Nudiš praksu?
             </Button>

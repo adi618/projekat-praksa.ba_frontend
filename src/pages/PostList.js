@@ -43,7 +43,7 @@ function PostList() {
   }
 
   const { results: posts } = data;
-
+  console.log(posts);
   return (
     <Box px={2}>
       {posts.map((post) => (
@@ -58,6 +58,7 @@ function PostList() {
           postTitle={post.title}
           postDescription={post.description}
           postId={post._id}
+          isPostExpired={new Date(post.applicationDue) < new Date()}
         />
       ))}
       <Box m={3} display="flex" justifyContent="space-between">

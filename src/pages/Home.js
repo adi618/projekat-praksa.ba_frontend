@@ -11,7 +11,7 @@ function Home() {
     <Box sx={{ width: '100%', textAlign: 'center' }}>
       <Typography
         variant="body2"
-        color="text.700"
+        color="text.grey.700"
         fontWeight="semiBold"
       >
         Student si?
@@ -26,7 +26,7 @@ function Home() {
       <Typography
         variant="body2"
         fontWeight="semiBold"
-        color="text.700"
+        color="text.grey.700"
       >
         Kompanija ste?
       </Typography>
