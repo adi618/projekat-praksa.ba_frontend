@@ -53,7 +53,7 @@ function App() {
             <Route path={ROUTE_PATHS.POST_LIST} element={<PostList />} exact />
             <Route path={`${ROUTE_PATHS.POST}/:postId`} element={<Post />} exact />
             <Route path={`${ROUTE_PATHS.COMPANY}/:companyId`} element={<Company />} exact />
-            {/* <Route path="*" element={<Navigate to="/" />} /> */}
+            <Route path="*" element={<Navigate to="/" />} />
           </Route>
         </Routes>
       </BrowserRouter>

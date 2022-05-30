@@ -1,8 +1,10 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { Button, Box, Typography } from '@mui/material';
-import { useDispatch } from 'react-redux';
+import {
+  Button, Box, Typography, CircularProgress,
+} from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
 import { REGEX } from '../constants';
 import TextFieldComponent from '../components/TextFieldComponent';
 import { signInUser } from '../features/user';
@@ -17,6 +19,7 @@ const schema = yup.object({
 
 function Login() {
   const dispatch = useDispatch();
+  const userData = useSelector((state) => state.user);
 
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
@@ -68,16 +71,22 @@ function Login() {
           type="submit"
           variant="primary"
           sx={{ mt: 5 }}
+          disabled={userData.isLoading}
         >
-          Prijavite se
+          {userData.isLoading ? <CircularProgress size={25} sx={{ ml: 2 }} /> : 'Prijavite se'}
         </Button>
         <Button
-          type="submit"
           variant="primary"
           sx={{ mt: 2 }}
+          disabled={userData.isLoading}
         >
           Zaboravili ste lozinku?
         </Button>
+        {userData.error.isError && (
+        <Typography color="red" mt={2}>
+          {userData.error.message}
+        </Typography>
+        )}
       </Box>
     </Box>
   );

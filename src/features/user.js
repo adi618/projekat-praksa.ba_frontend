@@ -19,7 +19,7 @@ export const verifyTokenUser = createAsyncThunk(
 
       return response.data;
     } catch (err) {
-      return rejectWithValue(err.message);
+      return rejectWithValue(err);
     }
   },
 );
@@ -32,7 +32,7 @@ export const signUpUser = createAsyncThunk(
 
       return response.data;
     } catch (err) {
-      return rejectWithValue(err.message);
+      return rejectWithValue(JSON.parse(err.response.request.responseText).message);
     }
   },
 );
@@ -45,7 +45,7 @@ export const signInUser = createAsyncThunk(
 
       return response.data;
     } catch (err) {
-      return rejectWithValue(err.message);
+      return rejectWithValue(JSON.parse(err.response.request.responseText).message);
     }
   },
 );
