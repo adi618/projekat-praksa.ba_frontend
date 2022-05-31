@@ -43,7 +43,7 @@ function PostList() {
   }
 
   const { results: posts } = data;
-  console.log(posts);
+
   return (
     <Box px={2}>
       {posts.map((post) => (

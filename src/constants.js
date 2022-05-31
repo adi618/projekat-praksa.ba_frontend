@@ -10,13 +10,14 @@ export const DRAWER = {
 
 export const ROUTE_PATHS = {
   HOME: '/',
-  POST: '/praksa',
-  POST_LIST: '/prakse',
-  COMPANY: '/firma',
   SEARCHING_FOR_INTERNSHIP: '/trazis-praksu',
   OFFERING_INTERNSHIP: '/nudis-praksu',
   LOGIN: '/prijava',
   REGISTER: '/registracija',
+  POST: '/praksa',
+  POST_LIST: '/prakse',
+  COMPANY: '/firma',
+  MY_PROFILE: '/moj-profil',
 };
 
 export const AUTHENTICATION_TYPE = {

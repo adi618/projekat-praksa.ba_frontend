@@ -1,12 +1,11 @@
 import { ThemeProvider, CssBaseline } from '@mui/material';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   BrowserRouter,
   Routes,
   Route,
-  Navigate,
 } from 'react-router-dom';
-import { NotLoggedInOutlet } from './outlets';
+import { LoggedInOutlet, NavigationOutlet, NotLoggedInOutlet } from './outlets';
 import { ROUTE_PATHS } from './constants';
 import { verifyTokenUser } from './features/user';
 import Home from './pages/Home';
@@ -16,9 +15,10 @@ import SearchingForInternship from './pages/SearchingForInternship';
 import OfferingInternship from './pages/OfferingInternship';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import NavigationLayout from './layouts/NavigationLayout';
 import PostList from './pages/PostList';
 import Company from './pages/Company';
+import PageNotFound from './pages/PageNotFound';
+import MyProfile from './pages/MyProfile';
 
 function App() {
   const dispatch = useDispatch();
@@ -34,7 +34,7 @@ function App() {
       <CssBaseline />
       <BrowserRouter>
         <Routes>
-          <Route element={<NavigationLayout />}>
+          <Route element={<NavigationOutlet />}>
             <Route element={<NotLoggedInOutlet />}>
               <Route path={ROUTE_PATHS.HOME} element={<Home />} exact />
               <Route
@@ -53,7 +53,10 @@ function App() {
             <Route path={ROUTE_PATHS.POST_LIST} element={<PostList />} exact />
             <Route path={`${ROUTE_PATHS.POST}/:postId`} element={<Post />} exact />
             <Route path={`${ROUTE_PATHS.COMPANY}/:companyId`} element={<Company />} exact />
-            <Route path="*" element={<Navigate to="/" />} />
+            <Route element={<LoggedInOutlet />}>
+              <Route path={`${ROUTE_PATHS.MY_PROFILE}`} element={<MyProfile />} exact />
+            </Route>
+            <Route path="*" element={<PageNotFound />} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, Typography, CardMedia } from '@mui/material';
 import { getPost } from '../api';
-import { BACKEND_HOST } from '../constants';
 import DetailedPostListItem from '../containers/PostListItem/DetailedPostListItem';
 import CompanyInfo from '../components/CompanyInfo';
 
@@ -18,12 +16,6 @@ function Post() {
       setPost(response.data);
     })();
   }, [params.postId]);
-  //  companyProfilePhoto,
-  // companyName,
-  // companyIndustry,
-  // companyEmail,
-  // companyAddress,
-  // companyCity,
 
   return (
     <>

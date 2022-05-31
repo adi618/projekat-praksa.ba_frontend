@@ -26,12 +26,12 @@ function Navigation() {
   const dispatch = useDispatch();
   const location = useLocation();
   const isLandingPage = location.pathname === ROUTE_PATHS.AUTH;
-  const isWiderThanMd = useMediaQuery((theme) => theme.breakpoints.up('md'));
   // we don't want the mobile navigation showing on the landing page
   // landing page aka login/register (auth) page
+  const isWiderThanMd = useMediaQuery((theme) => theme.breakpoints.up('md'));
 
   const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+    if (!isWiderThanMd) setMobileOpen(!mobileOpen);
   };
 
   const drawer = (
@@ -40,7 +40,7 @@ function Navigation() {
         <ListItemButton
           onClick={() => {
             navigate(ROUTE_PATHS.HOME);
-            if (!isWiderThanMd) handleDrawerToggle();
+            handleDrawerToggle();
           }}
         >
           <ListItemText
@@ -51,35 +51,39 @@ function Navigation() {
         <ListItemButton
           onClick={() => {
             navigate(ROUTE_PATHS.POST_LIST);
-            if (!isWiderThanMd) handleDrawerToggle();
+            handleDrawerToggle();
           }}
         >
           <ListItemText primary="Početna" />
         </ListItemButton>
       </List>
       <List>
-        {/* <ListItem>
-          <ListItemText
-            primary={userData.isLoggedIn ? userData.user.companyName : 'Kompanija ste?'}
-            primaryTypographyProps={{ variant: 'h6', fontWeight: 'medium' }}
-          />
-        </ListItem> */}
         {userData.isLoggedIn
           ? (
-            <ListItemButton
-              onClick={() => {
-                dispatch(logout());
-                if (!isWiderThanMd) handleDrawerToggle();
-              }}
-            >
-              <ListItemText primary="Odjavite se" />
-            </ListItemButton>
+            <>
+              <ListItemButton
+                onClick={() => {
+                  navigate(ROUTE_PATHS.MY_PROFILE);
+                  handleDrawerToggle();
+                }}
+              >
+                <ListItemText primary="Profil" />
+              </ListItemButton>
+              <ListItemButton
+                onClick={() => {
+                  dispatch(logout());
+                  handleDrawerToggle();
+                }}
+              >
+                <ListItemText primary="Odjavite se" />
+              </ListItemButton>
+            </>
           ) : (
             <>
               <ListItemButton
                 onClick={() => {
                   navigate(ROUTE_PATHS.SEARCHING_FOR_INTERNSHIP);
-                  if (!isWiderThanMd) handleDrawerToggle();
+                  handleDrawerToggle();
                 }}
               >
                 <ListItemText primary="Tražiš praksu?" />
@@ -88,7 +92,7 @@ function Navigation() {
               <ListItemButton
                 onClick={() => {
                   navigate(ROUTE_PATHS.OFFERING_INTERNSHIP);
-                  if (!isWiderThanMd) handleDrawerToggle();
+                  handleDrawerToggle();
                 }}
               >
                 <ListItemText primary="Nudiš praksu?" />
@@ -96,7 +100,7 @@ function Navigation() {
               <ListItemButton
                 onClick={() => {
                   navigate(ROUTE_PATHS.LOGIN);
-                  if (!isWiderThanMd) handleDrawerToggle();
+                  handleDrawerToggle();
                 }}
               >
                 <ListItemText primary="Prijavite se" />
@@ -104,7 +108,7 @@ function Navigation() {
               <ListItemButton
                 onClick={() => {
                   navigate(ROUTE_PATHS.REGISTER);
-                  if (!isWiderThanMd) handleDrawerToggle();
+                  handleDrawerToggle();
                 }}
               >
                 <ListItemText primary="Registrujte se" />
