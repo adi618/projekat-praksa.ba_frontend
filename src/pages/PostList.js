@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import {
   Box,
-  Button,
   CircularProgress,
+  Pagination,
   Typography,
 } from '@mui/material';
 import PostListItem from '../containers/PostListItem/PostListItem';
@@ -11,6 +11,10 @@ import { useListPostsQuery } from '../services/posts';
 function PostList() {
   const [page, setPage] = useState(1);
   const { data, isLoading } = useListPostsQuery({ page });
+
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
 
   if (isLoading) {
     return (
@@ -61,9 +65,13 @@ function PostList() {
           isPostExpired={new Date(post.applicationDue) < new Date()}
         />
       ))}
-      <Box m={3} display="flex" justifyContent="space-between">
-        {page !== 1 ? <Button onClick={() => setPage(page - 1)}>Previous</Button> : <Box />}
-        <Button onClick={() => setPage(page + 1)}>Next</Button>
+      <Box display="flex" justifyContent="center" pb={3}>
+        <Pagination
+          count={data.numberOfPages}
+          page={page}
+          onChange={handleChange}
+          shape="rounded"
+        />
       </Box>
     </Box>
   );

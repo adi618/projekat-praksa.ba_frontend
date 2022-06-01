@@ -1,5 +1,5 @@
 import { ThemeProvider, CssBaseline } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
   BrowserRouter,
   Routes,

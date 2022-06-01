@@ -1,6 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, CircularProgress, Typography } from '@mui/material';
+import {
+  Box,
+  CircularProgress,
+  Pagination,
+  Typography,
+} from '@mui/material';
 import { getCompany } from '../api';
 import CompanyInfo from '../components/CompanyInfo';
 import PostListItem from '../containers/PostListItem/PostListItem';
@@ -12,6 +17,10 @@ function Company() {
   const [company, setCompany] = useState({});
   const [page, setPage] = useState(1);
   const { data, isLoading } = useListPostsQuery({ companyId, page });
+
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
 
   useEffect(() => {
     (async () => {
@@ -84,6 +93,14 @@ function Company() {
           isPostExpired={new Date(post.applicationDue) < new Date()}
         />
       ))}
+      <Box display="flex" justifyContent="center" pb={3}>
+        <Pagination
+          count={data.numberOfPages}
+          page={page}
+          onChange={handleChange}
+          shape="rounded"
+        />
+      </Box>
     </>
   );
 }
