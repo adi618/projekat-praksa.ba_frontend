@@ -20,6 +20,10 @@ export const ROUTE_PATHS = {
   MY_PROFILE: '/moj-profil',
 };
 
+export const SEARCH_PARAMS = {
+  PAGE: 'stranica',
+};
+
 export const AUTHENTICATION_TYPE = {
   LOGIN: 'login',
   REGISTER: 'register',

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import {
   Box,
   CircularProgress,
@@ -10,15 +10,22 @@ import { getCompany } from '../api';
 import CompanyInfo from '../components/CompanyInfo';
 import PostListItem from '../containers/PostListItem/PostListItem';
 import { useListPostsQuery } from '../services/posts';
+import { SEARCH_PARAMS } from '../constants';
 
 function Company() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const pageNumber = (Number(searchParams.get(SEARCH_PARAMS.PAGE)) || 1);
+  const [page, setPage] = useState(pageNumber);
   const { companyId } = useParams();
-
   const [company, setCompany] = useState({});
-  const [page, setPage] = useState(1);
   const { data, isLoading } = useListPostsQuery({ companyId, page });
 
+  useEffect(() => {
+    setPage(pageNumber);
+  }, [pageNumber]);
+
   const handleChange = (event, value) => {
+    setSearchParams({ [SEARCH_PARAMS.PAGE]: value });
     setPage(value);
   };
 

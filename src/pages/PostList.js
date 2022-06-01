@@ -1,19 +1,28 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Box,
   CircularProgress,
   Pagination,
   Typography,
 } from '@mui/material';
+import { useSearchParams } from 'react-router-dom';
 import PostListItem from '../containers/PostListItem/PostListItem';
 import { useListPostsQuery } from '../services/posts';
+import { SEARCH_PARAMS } from '../constants';
 
 function PostList() {
-  const [page, setPage] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const pageNumber = (Number(searchParams.get(SEARCH_PARAMS.PAGE)) || 1);
+  const [page, setPage] = useState(pageNumber);
   const { data, isLoading } = useListPostsQuery({ page });
+
+  useEffect(() => {
+    setPage(pageNumber);
+  }, [pageNumber]);
 
   const handleChange = (event, value) => {
     setPage(value);
+    setSearchParams({ [SEARCH_PARAMS.PAGE]: value });
   };
 
   if (isLoading) {
