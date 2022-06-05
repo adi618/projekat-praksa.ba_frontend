@@ -24,6 +24,7 @@ function CompanyInfo({
           alt="logo"
           height={100}
           width={100}
+          sx={{ borderRadius: '50%' }}
         />
       </Box>
       <Typography variant="h6" fontWeight="semiBold">

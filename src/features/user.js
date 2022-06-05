@@ -12,7 +12,7 @@ const initialState = {
     isError: false,
     message: '',
   },
-  isLoading: false,
+  isLoading: true,
 };
 
 const authenticate = async (user, { rejectWithValue, dispatch }, type) => {
@@ -20,7 +20,7 @@ const authenticate = async (user, { rejectWithValue, dispatch }, type) => {
     let response;
     if (type === LOGIN) {
       response = await signIn(user);
-    } else if (type === 'register') {
+    } else if (type === REGISTER) {
       response = await signUp(user);
     } else {
       throw new Error();
@@ -37,7 +37,11 @@ const authenticate = async (user, { rejectWithValue, dispatch }, type) => {
   } catch (err) {
     let errorMessage;
     if (err?.response?.request?.responseText) {
-      errorMessage = JSON.parse(err?.response?.request?.responseText)?.message;
+      try {
+        errorMessage = JSON.parse(err?.response?.request?.responseText)?.message;
+      } catch {
+        errorMessage = 'Došlo je do greške';
+      }
     }
     dispatch(setSnackbar({
       isVisible: true,
@@ -77,8 +81,8 @@ export const verifyTokenUser = createAsyncThunk(
       const response = await verifyToken(token);
 
       return response.data;
-    } catch (err) {
-      return rejectWithValue(err);
+    } catch {
+      return rejectWithValue();
     }
   },
 );
@@ -122,7 +126,7 @@ export const userSlice = createSlice({
     [signInUser.rejected]: authenticateRejected,
     [verifyTokenUser.fulfilled]: authenticateFulfilled,
     [verifyTokenUser.pending]: authenticatePending,
-    [verifyTokenUser.rejected]: (state) => {
+    [verifyTokenUser.rejected]: (state, payload) => {
       state.isLoggedIn = false;
       state.isLoading = false;
     },

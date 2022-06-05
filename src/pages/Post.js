@@ -3,19 +3,34 @@ import { useParams } from 'react-router-dom';
 import { getPost } from '../api';
 import DetailedPostListItem from '../containers/PostListItem/DetailedPostListItem';
 import CompanyInfo from '../components/CompanyInfo';
+import ErrorMessage from '../components/ErrorMessage';
+import Loader from '../components/Loader';
 
 function Post() {
   const params = useParams();
-
   const [post, setPost] = useState([]);
+  const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
-      const response = await getPost(params.postId);
-
-      setPost(response.data);
+      try {
+        const response = await getPost(params.postId);
+        setPost(response.data);
+      } catch {
+        setIsError(true);
+      }
+      setIsLoading(false);
     })();
   }, [params.postId]);
+
+  if (isError) {
+    return <ErrorMessage>Došlo je do greške. Objava za praksu nije pronađena.</ErrorMessage>;
+  }
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <>

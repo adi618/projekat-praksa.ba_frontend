@@ -1,10 +1,12 @@
-import { ThemeProvider, CssBaseline } from '@mui/material';
-import { useDispatch } from 'react-redux';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { ThemeProvider, CssBaseline, Box } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   BrowserRouter,
   Routes,
   Route,
 } from 'react-router-dom';
+import { useEffect } from 'react';
 import { LoggedInOutlet, NavigationOutlet, NotLoggedInOutlet } from './outlets';
 import { ROUTE_PATHS } from './constants';
 import { verifyTokenUser } from './features/user';
@@ -19,14 +21,20 @@ import PostList from './pages/PostList';
 import Company from './pages/Company';
 import PageNotFound from './pages/PageNotFound';
 import MyProfile from './pages/MyProfile';
+import Loader from './components/Loader';
 
 function App() {
   const dispatch = useDispatch();
 
+  const userData = useSelector((state) => state.user);
   const token = localStorage.getItem('token');
 
-  if (token) {
+  useEffect(() => {
     dispatch(verifyTokenUser(token));
+  }, []);
+
+  if (userData.isLoading) {
+    return <Box sx={{ height: '100vh' }}><Loader /></Box>;
   }
 
   return (

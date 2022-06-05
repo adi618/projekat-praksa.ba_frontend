@@ -32,6 +32,7 @@ function Login() {
   return (
     <Box sx={{ width: '100%' }}>
       <Box
+        encType="multipart/form-data"
         component="form"
         onSubmit={handleSubmit(onSubmit)}
         noValidate
