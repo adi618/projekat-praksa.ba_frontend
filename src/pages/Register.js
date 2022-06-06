@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { REGEX } from '../constants';
 import TextFieldComponent from '../components/TextFieldComponent';
 import { signUpUser } from '../features/user';
+import { getFormData } from '../util/helpers';
 
 const requiredErrorMessage = 'Obavezno polje';
 const invalidEmailErrorMessage = 'Nevažeća email adresa';
@@ -44,11 +45,6 @@ function Register() {
   });
 
   const onSubmit = (data) => {
-    const getFormData = (element) => Object.keys(element).reduce((formData, key) => {
-      formData.append(key, element[key]);
-      return formData;
-    }, new FormData());
-
     const formData = getFormData(data);
 
     formData.append('profilePicture', selectedFile);
