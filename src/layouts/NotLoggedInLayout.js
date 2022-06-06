@@ -9,7 +9,7 @@ import React from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import authHeaderImage from '../assets/images/authHeaderImage.jpg';
 import { ROUTE_PATHS } from '../constants';
-import Footer from '../containers/Footer';
+import Footer from '../components/Footer';
 
 function NotLoggedInLayout() {
   const navigate = useNavigate();

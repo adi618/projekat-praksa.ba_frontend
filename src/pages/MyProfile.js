@@ -9,6 +9,7 @@ import { useListPostsQuery } from '../services/posts';
 import { SEARCH_PARAMS } from '../constants';
 import Loader from '../components/Loader';
 import ErrorMessage from '../components/ErrorMessage';
+import NewPostInput from '../containers/MyProfile/NewPostInput';
 
 function MyProfile() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -72,6 +73,7 @@ function MyProfile() {
           companyCity={company?.city}
         />
       </Box>
+      <NewPostInput />
       {postsData === undefined
         ? (
           <ErrorMessage>Još niste objavili oglas za praksu.</ErrorMessage>

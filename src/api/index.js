@@ -7,7 +7,6 @@ API.interceptors.request.use((req) => {
   if (localStorage.getItem('token')) {
     req.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
   }
-  req.headers['Content-Type'] = 'application/x-www-form-urlencoded';
 
   return req;
 });
