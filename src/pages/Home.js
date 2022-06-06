@@ -33,6 +33,7 @@ function Home() {
       <Button
         variant="primary"
         onClick={() => navigate(ROUTE_PATHS.OFFERING_INTERNSHIP)}
+        className="kompanije"
       >
         Nudite praksu?
       </Button>

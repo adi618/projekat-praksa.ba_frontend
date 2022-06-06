@@ -62,6 +62,7 @@ function OfferingInternship() {
         <Button
           variant="primary"
           onClick={() => navigate(ROUTE_PATHS.LOGIN)}
+          className="prijava2"
         >
           Prijavite se
         </Button>

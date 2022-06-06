@@ -59,6 +59,7 @@ function Login() {
           register={register}
           name="email"
           errorMessage={errors.email?.message}
+          className="insertemail"
         />
         <TextFieldComponent
           required
@@ -67,12 +68,14 @@ function Login() {
           name="password"
           errorMessage={errors.password?.message}
           type="password"
+          id="insertpassword"
         />
         <Button
           type="submit"
           variant="primary"
           sx={{ mt: 5 }}
           disabled={userData.isLoading}
+          className="submitlogin"
         >
           {userData.isLoading ? <CircularProgress size={25} sx={{ ml: 2 }} /> : 'Prijavite se'}
         </Button>

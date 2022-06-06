@@ -102,6 +102,7 @@ function Navigation() {
                   navigate(ROUTE_PATHS.LOGIN);
                   handleDrawerToggle();
                 }}
+                className="login1"
               >
                 <ListItemText primary="Prijavite se" />
               </ListItemButton>
@@ -110,6 +111,7 @@ function Navigation() {
                   navigate(ROUTE_PATHS.REGISTER);
                   handleDrawerToggle();
                 }}
+                className="registration1"
               >
                 <ListItemText primary="Registrujte se" />
               </ListItemButton>

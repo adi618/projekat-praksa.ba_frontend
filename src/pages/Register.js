@@ -175,6 +175,7 @@ function Register() {
           type="submit"
           variant="primary"
           sx={{ mt: 5 }}
+          className="register"
         >
           Registrujte se
         </Button>
