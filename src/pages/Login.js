@@ -11,7 +11,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { REGEX } from '../constants';
 import TextFieldComponent from '../components/TextFieldComponent';
 import { signInUser } from '../features/user';
-import { getFormData } from '../util/helpers';
 
 const requiredErrorMessage = 'Obavezno polje';
 const invalidEmailErrorMessage = 'Nevažeća email adresa';
@@ -30,9 +29,7 @@ function Login() {
   });
 
   const onSubmit = (data) => {
-    const formData = getFormData(data);
-
-    dispatch(signInUser(formData));
+    dispatch(signInUser(data));
   };
   // login email: kenan.genjac2019@size.ba
   return (

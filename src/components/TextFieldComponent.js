@@ -1,8 +1,7 @@
-import PropTypes from 'prop-types';
 import { Box, TextField, Typography } from '@mui/material';
 
 function TextFieldComponent({
-  required, label, register, name, errorMessage, type, width,
+  required, label, register, name, errorMessage, type, width, multiline, minRows,
 }) {
   return (
     <Box sx={{ width }}>
@@ -12,6 +11,8 @@ function TextFieldComponent({
         variant="filled"
         required={required}
         label={label}
+        multiline={multiline}
+        minRows={minRows}
         {...register(name)}
         autoComplete="off"
         sx={(theme) => ({
@@ -20,10 +21,14 @@ function TextFieldComponent({
           '& .MuiFilledInput-input': {
             borderRadius: 4,
             bgcolor: 'white',
+            p: multiline ? 2 : null,
             border: errorMessage ? `1px solid ${theme.palette.error.main}` : null,
           },
           '& .MuiInputLabel-root': {
-            color: 'black', opacity: '50%', fontWeight: 'medium',
+            color: 'text.grey.700',
+            fontWeight: 'medium',
+            pt: multiline ? 2.8 : null,
+            pl: multiline ? 1 : null,
           },
           '& .MuiInputLabel-asterisk': {
             color: 'error.main',
@@ -34,7 +39,7 @@ function TextFieldComponent({
           '& .MuiFilledInput-root:hover': {
             bgcolor: 'inherit',
           },
-          '& .MuiFilledInput-root:focus': {
+          '& .Mui-focused': {
             bgcolor: 'inherit',
           },
         })}
@@ -47,9 +52,5 @@ function TextFieldComponent({
 }
 
 TextFieldComponent.defaultProps = { width: '80%' };
-
-TextFieldComponent.propTypes = {
-  width: PropTypes.string,
-};
 
 export default TextFieldComponent;
