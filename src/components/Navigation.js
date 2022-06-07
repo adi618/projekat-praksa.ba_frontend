@@ -74,6 +74,7 @@ function Navigation() {
                   dispatch(logout());
                   handleDrawerToggle();
                 }}
+                className="logout"
               >
                 <ListItemText primary="Odjavite se" />
               </ListItemButton>
