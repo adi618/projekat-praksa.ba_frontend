@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { ThemeProvider, CssBaseline, Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -6,10 +5,11 @@ import {
   Routes,
   Route,
 } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
 import { LoggedInOutlet, NavigationOutlet, NotLoggedInOutlet } from './outlets';
 import { ROUTE_PATHS } from './constants';
-import { verifyTokenUser } from './features/user';
+import { tokenMissing, verifyTokenUser } from './features/user';
 import Home from './pages/Home';
 import Post from './pages/Post';
 import theme from './theme';
@@ -24,14 +24,17 @@ import MyProfile from './pages/MyProfile';
 import Loader from './components/Loader';
 
 function App() {
+  const [token] = useState(localStorage.getItem('token'));
   const dispatch = useDispatch();
-
   const userData = useSelector((state) => state.user);
-  const token = localStorage.getItem('token');
 
   useEffect(() => {
-    dispatch(verifyTokenUser(token));
-  }, []);
+    if (token) {
+      dispatch(verifyTokenUser(token));
+    } else {
+      dispatch(tokenMissing());
+    }
+  }, [dispatch, token]);
 
   if (userData.isLoading) {
     return <Box sx={{ height: '100vh' }}><Loader /></Box>;

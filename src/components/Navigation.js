@@ -31,7 +31,9 @@ function Navigation() {
   const isWiderThanMd = useMediaQuery((theme) => theme.breakpoints.up('md'));
 
   const handleDrawerToggle = () => {
-    if (!isWiderThanMd) setMobileOpen(!mobileOpen);
+    if (!isWiderThanMd) {
+      setMobileOpen(!mobileOpen);
+    }
   };
 
   const drawer = (
