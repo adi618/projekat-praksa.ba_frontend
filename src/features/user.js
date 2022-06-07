@@ -116,6 +116,9 @@ export const userSlice = createSlice({
       state.isLoading = false;
       localStorage.removeItem('token');
     },
+    tokenMissing: (state) => {
+      state.isLoading = false;
+    },
   },
   extraReducers: {
     [signUpUser.fulfilled]: authenticateFulfilled,
@@ -126,13 +129,13 @@ export const userSlice = createSlice({
     [signInUser.rejected]: authenticateRejected,
     [verifyTokenUser.fulfilled]: authenticateFulfilled,
     [verifyTokenUser.pending]: authenticatePending,
-    [verifyTokenUser.rejected]: (state, payload) => {
+    [verifyTokenUser.rejected]: (state) => {
       state.isLoggedIn = false;
       state.isLoading = false;
     },
   },
 });
 
-export const { logout } = userSlice.actions;
+export const { logout, tokenMissing } = userSlice.actions;
 
 export default userSlice.reducer;

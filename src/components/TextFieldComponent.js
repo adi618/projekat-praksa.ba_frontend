@@ -17,7 +17,6 @@ function TextFieldComponent({
         sx={(theme) => ({
           width: '100%',
           mt: 2,
-          bgcolor: 'white',
           '& .MuiFilledInput-input': {
             borderRadius: 4,
             bgcolor: 'white',
@@ -30,10 +29,13 @@ function TextFieldComponent({
             color: 'error.main',
           },
           '& .MuiFilledInput-root': {
-            bgcolor: 'primary.500',
+            bgcolor: 'inherit',
           },
           '& .MuiFilledInput-root:hover': {
-            bgcolor: 'primary.500',
+            bgcolor: 'inherit',
+          },
+          '& .MuiFilledInput-root:focus': {
+            bgcolor: 'inherit',
           },
         })}
         InputProps={{ disableUnderline: true, style: { fontSize: 14 } }}
