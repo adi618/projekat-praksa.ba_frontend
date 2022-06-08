@@ -4,11 +4,17 @@ function Footer() {
   return (
     <Box
       sx={{
+        position: 'fixed',
+        bottom: 0,
+        right: 0,
+        width: '100%',
         display: 'flex',
         justifyContent: 'end',
         textAlign: 'center',
         alignItems: 'center',
-        height: '8%',
+        minHeight: '8vh',
+        bgcolor: 'primary.500',
+        zIndex: 1000,
       }}
     >
       <Typography
