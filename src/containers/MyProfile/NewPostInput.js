@@ -6,6 +6,8 @@ import {
   Box,
   Typography,
   TextField,
+  Stack,
+  Button,
 } from '@mui/material';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -17,32 +19,39 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import TextFieldComponent from '../../components/TextFieldComponent';
 import { getFormData } from '../../util/helpers';
+import { createPost } from '../../api';
 
 const schema = yup.object({
-  email: yup.string().required('requiredErrorMessage'),
-  password: yup.string().required('requiredErrorMessage').min(5, 'Prekratka lozinka'),
+  title: yup.string().required('Obavezno polje'),
+  description: yup.string().required('Obavezno polje'),
+  location: yup.string().required('Obavezno polje'),
 }).required();
 
 function NewPostInput() {
-  const dispatch = useDispatch();
-  const [value, setValue] = useState(null);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [applicationDueDate, setApplicationDueDate] = useState(null);
 
   const {
-    register, handleSubmit, formState: { errors }, control,
+    register, handleSubmit, formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
 
   const onSubmit = (data) => {
     const formData = getFormData(data);
-    console.log(formData);
+
+    formData.append('startDate', `${startDate.getFullYear()}-${startDate.getMonth()}-${startDate.getDate()}-${startDate.getHours()}`);
+
+    formData.append('endDate', `${endDate.getFullYear()}-${endDate.getMonth()}-${endDate.getDate()}-${endDate.getHours()}`);
+
+    formData.append('applicationDue', `${applicationDueDate.getFullYear()}-${applicationDueDate.getMonth()}-${applicationDueDate.getDate()}-${applicationDueDate.getHours()}`);
+
+    createPost(formData);
   };
 
   return (
     <Box sx={{ borderRadius: 4, overflow: 'hidden', m: 3 }}>
-      {/* <Box sx={{ bgcolor: 'primary.600', p: 2 }}>
-        Želite objaviti oglas za praksu?
-      </Box> */}
       <Accordion
         disableGutters
         elevation={0}
@@ -65,10 +74,9 @@ function NewPostInput() {
             noValidate
             sx={{
               height: '100%',
-              width: { xs: '100%', lg: '60%' },
-              maxWidth: '1000px',
               display: 'flex',
               flexDirection: 'column',
+              justifyContent: 'center',
               alignItems: 'center',
             }}
           >
@@ -76,54 +84,69 @@ function NewPostInput() {
               required
               label="Naslov"
               register={register}
-              name="email"
-              errorMessage={errors.email?.message}
-              width="100%"
+              name="title"
+              errorMessage={errors.title?.message}
+              width={{ xs: '100%', lg: '60%' }}
             />
             <TextFieldComponent
               required
               label="Opis"
               register={register}
-              name="email"
-              errorMessage={errors.email?.message}
-              width="100%"
-            />
-            <TextFieldComponent
-              required
-              label="Početak"
-              register={register}
-              name="email"
-              errorMessage={errors.email?.message}
-              width="100%"
-            />
-            <TextFieldComponent
-              required
-              label="Trajanje"
-              register={register}
-              name="email"
-              errorMessage={errors.email?.message}
-              width="100%"
+              name="description"
+              errorMessage={errors.description?.message}
+              width={{ xs: '100%', lg: '60%' }}
+              multiline
+              minRows={4}
             />
             <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DatePicker
-                label="Kraj"
-                openTo="year"
-                views={['day', 'month', 'year']}
-                value={value}
-                onChange={(newValue) => {
-                  setValue(newValue);
-                }}
-                renderInput={(params) => <TextField {...params} />}
-              />
+              <Stack spacing={2} pt={2}>
+                <DatePicker
+                  label="Početak"
+                  openTo="day"
+                  views={['day', 'month', 'year']}
+                  value={startDate}
+                  onChange={(newValue) => {
+                    setStartDate(newValue);
+                  }}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+                <DatePicker
+                  label="Kraj"
+                  openTo="day"
+                  views={['day', 'month', 'year']}
+                  value={endDate}
+                  onChange={(newValue) => {
+                    setEndDate(newValue);
+                  }}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+                <DatePicker
+                  label="Rok za prijavu"
+                  openTo="day"
+                  views={['day', 'month', 'year']}
+                  value={applicationDueDate}
+                  onChange={(newValue) => {
+                    setApplicationDueDate(newValue);
+                  }}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </Stack>
             </LocalizationProvider>
             <TextFieldComponent
               required
               label="Lokacija"
               register={register}
-              name="email"
-              errorMessage={errors.email?.message}
+              name="location"
+              errorMessage={errors.location?.message}
               width="100%"
             />
+            <Button
+              type="submit"
+              variant="primary"
+              sx={{ mt: 5 }}
+            >
+              Postavite oglas
+            </Button>
           </Box>
         </AccordionDetails>
       </Accordion>
