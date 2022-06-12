@@ -21,11 +21,15 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { addDays, format, isDate } from 'date-fns';
 import TextFieldComponent from '../../components/TextFieldComponent';
 import { createPost } from '../../api';
+import MultipleSelect from '../../components/MultipleSelect';
+import { INDUSTRIES, LOCATIONS } from '../../constants';
+import BasicSelect from '../../components/BasicSelect';
 
-const schema = yup.object().shape({
+const schema = yup.object({
   title: yup.string().required('Obavezno polje'),
   description: yup.string().required('Obavezno polje'),
-  location: yup.string().required('Obavezno polje'),
+  industry: yup.string().required('Obavezno polje'),
+  location: yup.array().min(1, 'Obavezno polje').required('Obavezno polje').nullable(),
 }).required();
 
 function NewPostInput() {
@@ -36,6 +40,22 @@ function NewPostInput() {
   const [endDateError, setEndDateError] = useState(false);
   const [applicationDueDateError, setApplicationDueDateError] = useState(false);
   const [isCreatePostButtonClicked, setIsCreatePostButtonClicked] = useState(false);
+  const [selectedLocations, setSelectedLocations] = useState([]);
+  const [selectedIndustry, setSelectedIndustry] = useState();
+
+  const handleLocationsChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setSelectedLocations(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value,
+    );
+  };
+
+  const handleIndustryChange = (event) => {
+    setSelectedIndustry(event.target.value);
+  };
 
   const currentDate = new Date();
   currentDate.setHours(0, 0, 0, 0);
@@ -53,6 +73,8 @@ function NewPostInput() {
     data.startDate = format(startDate, 'uuuu-MM-dd');
     data.endDate = format(endDate, 'uuuu-MM-dd');
     data.applicationDue = format(applicationDueDate, 'uuuu-MM-dd');
+    data.category = data.industry;
+    data.workTimeType = ['keno napusi se'];
     console.log(data);
 
     createPost(data);
@@ -260,13 +282,23 @@ function NewPostInput() {
                 </Box>
               </Stack>
             </LocalizationProvider>
-            <TextFieldComponent
-              required
-              label="Lokacija"
+            <BasicSelect
+              title="Industrija"
+              name="industry"
               register={register}
+              errorMessage={errors.industry?.message}
+              options={INDUSTRIES}
+              selectedOptions={selectedIndustry}
+              handleOptionsChange={handleIndustryChange}
+            />
+            <MultipleSelect
+              title="Lokacije"
               name="location"
+              register={register}
               errorMessage={errors.location?.message}
-              width="100%"
+              options={LOCATIONS}
+              selectedOptions={selectedLocations}
+              handleOptionsChange={handleLocationsChange}
             />
             <Button
               type="submit"
