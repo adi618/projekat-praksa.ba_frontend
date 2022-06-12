@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
   Accordion,
@@ -17,11 +18,11 @@ import * as yup from 'yup';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { addDays, format, isDate } from 'date-fns';
 import TextFieldComponent from '../../components/TextFieldComponent';
-import { getFormData } from '../../util/helpers';
 import { createPost } from '../../api';
 
-const schema = yup.object({
+const schema = yup.object().shape({
   title: yup.string().required('Obavezno polje'),
   description: yup.string().required('Obavezno polje'),
   location: yup.string().required('Obavezno polje'),
@@ -31,6 +32,13 @@ function NewPostInput() {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [applicationDueDate, setApplicationDueDate] = useState(null);
+  const [startDateError, setStartDateError] = useState(false);
+  const [endDateError, setEndDateError] = useState(false);
+  const [applicationDueDateError, setApplicationDueDateError] = useState(false);
+  const [isCreatePostButtonClicked, setIsCreatePostButtonClicked] = useState(false);
+
+  const currentDate = new Date();
+  currentDate.setHours(0, 0, 0, 0);
 
   const {
     register, handleSubmit, formState: { errors },
@@ -39,15 +47,28 @@ function NewPostInput() {
   });
 
   const onSubmit = (data) => {
-    const formData = getFormData(data);
+    if (startDateError || endDateError || applicationDueDateError) {
+      return;
+    }
+    data.startDate = format(startDate, 'uuuu-MM-dd');
+    data.endDate = format(endDate, 'uuuu-MM-dd');
+    data.applicationDue = format(applicationDueDate, 'uuuu-MM-dd');
+    console.log(data);
 
-    formData.append('startDate', `${startDate.getFullYear()}-${startDate.getMonth()}-${startDate.getDate()}-${startDate.getHours()}`);
+    createPost(data);
+  };
 
-    formData.append('endDate', `${endDate.getFullYear()}-${endDate.getMonth()}-${endDate.getDate()}-${endDate.getHours()}`);
-
-    formData.append('applicationDue', `${applicationDueDate.getFullYear()}-${applicationDueDate.getMonth()}-${applicationDueDate.getDate()}-${applicationDueDate.getHours()}`);
-
-    createPost(formData);
+  const onSubmitButtonClick = () => {
+    setIsCreatePostButtonClicked(true);
+    if (!isDate(startDate)) {
+      setStartDateError('Obavezno polje');
+    }
+    if (!isDate(endDate)) {
+      setEndDateError('Obavezno polje');
+    }
+    if (!isDate(applicationDueDate)) {
+      setApplicationDueDateError('Obavezno polje');
+    }
   };
 
   return (
@@ -100,36 +121,143 @@ function NewPostInput() {
             />
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <Stack spacing={2} pt={2}>
-                <DatePicker
-                  label="Početak"
-                  openTo="day"
-                  views={['day', 'month', 'year']}
-                  value={startDate}
-                  onChange={(newValue) => {
-                    setStartDate(newValue);
-                  }}
-                  renderInput={(params) => <TextField {...params} />}
-                />
-                <DatePicker
-                  label="Kraj"
-                  openTo="day"
-                  views={['day', 'month', 'year']}
-                  value={endDate}
-                  onChange={(newValue) => {
-                    setEndDate(newValue);
-                  }}
-                  renderInput={(params) => <TextField {...params} />}
-                />
-                <DatePicker
-                  label="Rok za prijavu"
-                  openTo="day"
-                  views={['day', 'month', 'year']}
-                  value={applicationDueDate}
-                  onChange={(newValue) => {
-                    setApplicationDueDate(newValue);
-                  }}
-                  renderInput={(params) => <TextField {...params} />}
-                />
+                <Box>
+                  <DatePicker
+                    label={(
+                      <Box sx={{ display: 'flex' }}>
+                        <Typography>Početak</Typography>
+                        <Typography color="error.main" pl="2px">*</Typography>
+                      </Box>
+                    )}
+                    openTo="day"
+                    views={['day', 'month', 'year']}
+                    inputFormat="dd/MM/uuuu"
+                    value={startDate}
+                    onChange={(newValue) => {
+                      if (newValue === null || newValue == 'Invalid Date') {
+                        setStartDateError('Datum nije validan');
+                      } else {
+                        if (endDate <= newValue) {
+                          setEndDateError('Datum kraja mora biti poslije datuma početka');
+                        } else {
+                          setEndDateError('');
+                        }
+                        if (applicationDueDate > newValue) {
+                          setApplicationDueDateError('Rok prijave mora biti prije datuma početka');
+                        } else {
+                          setApplicationDueDateError('');
+                        }
+                        if (newValue < currentDate) {
+                          setStartDateError('Datum početka ne može biti u prošlosti');
+                        } else {
+                          setStartDateError('');
+                        }
+                      }
+                      setStartDate(new Date(newValue));
+                    }}
+                    minDate={currentDate}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                      />
+                    )}
+                  />
+                  <Typography
+                    variant="caption"
+                    sx={{
+                      display: 'block',
+                      color: 'error.main',
+                      textAlign: 'right',
+                    }}
+                  >
+                    {isCreatePostButtonClicked && startDateError}
+                  </Typography>
+                </Box>
+                <Box>
+                  <DatePicker
+                    label={(
+                      <Box sx={{ display: 'flex' }}>
+                        <Typography>Kraj</Typography>
+                        <Typography color="error.main" pl="2px">*</Typography>
+                      </Box>
+                    )}
+                    openTo="day"
+                    views={['day', 'month', 'year']}
+                    inputFormat="dd/MM/uuuu"
+                    value={endDate}
+                    onChange={(newValue) => {
+                      if (newValue === null || newValue == 'Invalid Date') {
+                        setEndDateError('Datum nije validan');
+                      } else if (newValue < currentDate) {
+                        setEndDateError('Datum kraja ne može biti u prošlosti');
+                      } else if (isDate(startDate) && newValue <= startDate) {
+                        setEndDateError('Datum kraja mora biti poslije datuma početka');
+                      } else {
+                        setEndDateError('');
+                      }
+                      setEndDate(new Date(newValue));
+                    }}
+                    minDate={!startDateError ? addDays(startDate, 1) : currentDate}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                      />
+                    )}
+                  />
+                  <Typography
+                    variant="caption"
+                    sx={{
+                      display: 'block',
+                      color: 'error.main',
+                      textAlign: 'right',
+                    }}
+                  >
+                    {isCreatePostButtonClicked && endDateError}
+                  </Typography>
+                </Box>
+                <Box>
+                  <DatePicker
+                    label={(
+                      <Box sx={{ display: 'flex' }}>
+                        <Typography>Rok za prijavu</Typography>
+                        <Typography color="error.main" pl="2px">*</Typography>
+                      </Box>
+                    )}
+                    openTo="day"
+                    views={['day', 'month', 'year']}
+                    inputFormat="dd/MM/uuuu"
+                    value={applicationDueDate}
+                    onChange={(newValue) => {
+                      if (newValue === null || newValue == 'Invalid Date') {
+                        setApplicationDueDateError('Datum nije validan');
+                      } else if (newValue < currentDate) {
+                        setApplicationDueDateError('Rok prijave ne može biti u prošlosti');
+                      } else if (isDate(startDate) && newValue > startDate) {
+                        setApplicationDueDateError('Rok prijave mora biti prije datuma početka');
+                      } else {
+                        setApplicationDueDateError('');
+                      }
+                      setApplicationDueDate(new Date(newValue));
+                    }}
+                    minDate={currentDate}
+                    maxDate={!startDateError ? startDate : null}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                      />
+                    )}
+                  />
+                  <Typography
+                    variant="caption"
+                    sx={{
+                      display: 'block',
+                      color: 'error.main',
+                      textAlign: 'right',
+                    }}
+                  >
+                    {isCreatePostButtonClicked && applicationDueDateError}
+                  </Typography>
+                </Box>
               </Stack>
             </LocalizationProvider>
             <TextFieldComponent
@@ -143,7 +271,8 @@ function NewPostInput() {
             <Button
               type="submit"
               variant="primary"
-              sx={{ mt: 5 }}
+              sx={{ mt: 2 }}
+              onClick={onSubmitButtonClick}
             >
               Postavite oglas
             </Button>
