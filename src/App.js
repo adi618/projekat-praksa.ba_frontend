@@ -23,6 +23,7 @@ import Company from './pages/Company';
 import PageNotFound from './pages/PageNotFound';
 import MyProfile from './pages/MyProfile';
 import Loader from './components/Loader';
+import EditMyProfile from './pages/EditMyProfile';
 
 function App() {
   const [token] = useState(localStorage.getItem('token'));
@@ -83,6 +84,11 @@ function App() {
               <Route
                 path={`${ROUTE_PATHS.MY_PROFILE}`}
                 element={<MyProfile />}
+                exact
+              />
+              <Route
+                path={`${ROUTE_PATHS.EDIT_PROFILE}`}
+                element={<EditMyProfile />}
                 exact
               />
             </Route>

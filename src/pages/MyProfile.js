@@ -10,6 +10,7 @@ import { SEARCH_PARAMS } from '../constants';
 import Loader from '../components/Loader';
 import ErrorMessage from '../components/ErrorMessage';
 import NewPostInput from '../containers/MyProfile/NewPostInput';
+import EditPostInput from '../containers/MyProfile/EditPostInput';
 
 function MyProfile() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -63,6 +64,7 @@ function MyProfile() {
         flexDirection="column"
         alignItems="center"
         py={3}
+        position="relative"
       >
         <CompanyInfo
           companyProfilePhoto={company?.profilePhoto}
@@ -72,11 +74,12 @@ function MyProfile() {
           companyAddress={company?.address}
           companyCity={company?.city}
         />
+        {/* <EditPostInput /> */}
       </Box>
       <NewPostInput />
       {postsData === undefined
         ? (
-          <ErrorMessage>Još niste objavili oglas za praksu.</ErrorMessage>
+          <ErrorMessage>Oglasi za praksu nisu pronađeni.</ErrorMessage>
         )
         : (
           <>

@@ -18,6 +18,7 @@ export const ROUTE_PATHS = {
   POST_LIST: '/prakse',
   COMPANY: '/firma',
   MY_PROFILE: '/moj-profil',
+  EDIT_PROFILE: '/uredi-profil',
 };
 
 export const SEARCH_PARAMS = {
