@@ -4,6 +4,7 @@ import {
   BrowserRouter,
   Routes,
   Route,
+  Navigate,
 } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
@@ -47,7 +48,11 @@ function App() {
         <Routes>
           <Route element={<NavigationOutlet />}>
             <Route element={<NotLoggedInOutlet />}>
-              <Route path={ROUTE_PATHS.HOME} element={<Home />} exact />
+              <Route
+                path={ROUTE_PATHS.HOME}
+                element={<Home />}
+                exact
+              />
               <Route
                 path={ROUTE_PATHS.SEARCHING_FOR_INTERNSHIP}
                 element={<SearchingForInternship />}
@@ -58,16 +63,48 @@ function App() {
                 element={<OfferingInternship />}
                 exact
               />
-              <Route path={ROUTE_PATHS.LOGIN} element={<Login />} exact />
-              <Route path={ROUTE_PATHS.REGISTER} element={<Register />} exact />
+              <Route
+                path={ROUTE_PATHS.LOGIN}
+                element={<Login />}
+                exact
+              />
+              <Route
+                path={ROUTE_PATHS.REGISTER}
+                element={<Register />}
+                exact
+              />
             </Route>
-            <Route path={ROUTE_PATHS.POST_LIST} element={<PostList />} exact />
-            <Route path={`${ROUTE_PATHS.POST}/:postId`} element={<Post />} exact />
-            <Route path={`${ROUTE_PATHS.COMPANY}/:companyId`} element={<Company />} exact />
             <Route element={<LoggedInOutlet />}>
-              <Route path={`${ROUTE_PATHS.MY_PROFILE}`} element={<MyProfile />} exact />
+              <Route
+                path={`${ROUTE_PATHS.COMPANY}/${userData.user._id}`}
+                element={<Navigate to={`${ROUTE_PATHS.MY_PROFILE}`} />}
+                exact
+              />
+              <Route
+                path={`${ROUTE_PATHS.MY_PROFILE}`}
+                element={<MyProfile />}
+                exact
+              />
             </Route>
-            <Route path="*" element={<PageNotFound />} />
+            <Route
+              path={ROUTE_PATHS.POST_LIST}
+              element={<PostList />}
+              exact
+            />
+            <Route
+              path={`${ROUTE_PATHS.POST}/:postId`}
+              element={<Post />}
+              exact
+            />
+            <Route
+              path={`${ROUTE_PATHS.COMPANY}/:companyId`}
+              element={<Company />}
+              exact
+            />
+            <Route
+              path="*"
+              element={<PageNotFound />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -22,8 +22,10 @@ import { addDays, format, isDate } from 'date-fns';
 import TextFieldComponent from '../../components/TextFieldComponent';
 import { createPost } from '../../api';
 import MultipleSelect from '../../components/MultipleSelect';
-import { INDUSTRIES, LOCATIONS } from '../../constants';
+import { INDUSTRIES, LOCATIONS, SNACKBAR_VARIANTS } from '../../constants';
 import BasicSelect from '../../components/BasicSelect';
+import { setSnackbar } from '../../features/snackbar';
+import TextWithRedAsterisk from '../../components/TextWithRedAsterisk';
 
 const schema = yup.object({
   title: yup.string().required('Obavezno polje'),
@@ -31,6 +33,8 @@ const schema = yup.object({
   industry: yup.string().required('Obavezno polje'),
   location: yup.array().min(1, 'Obavezno polje').required('Obavezno polje').nullable(),
 }).required();
+
+const FIELDS_WIDTH = { xs: '100%', lg: '70%', xl: '60%' };
 
 function NewPostInput() {
   const [startDate, setStartDate] = useState(null);
@@ -41,14 +45,15 @@ function NewPostInput() {
   const [applicationDueDateError, setApplicationDueDateError] = useState(false);
   const [isCreatePostButtonClicked, setIsCreatePostButtonClicked] = useState(false);
   const [selectedLocations, setSelectedLocations] = useState([]);
-  const [selectedIndustry, setSelectedIndustry] = useState();
+  const [selectedIndustry, setSelectedIndustry] = useState('');
+  const [createPostLoading, setCreatePostLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const handleLocationsChange = (event) => {
     const {
       target: { value },
     } = event;
     setSelectedLocations(
-      // On autofill we get a stringified value.
       typeof value === 'string' ? value.split(',') : value,
     );
   };
@@ -66,7 +71,7 @@ function NewPostInput() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     if (startDateError || endDateError || applicationDueDateError) {
       return;
     }
@@ -74,10 +79,21 @@ function NewPostInput() {
     data.endDate = format(endDate, 'uuuu-MM-dd');
     data.applicationDue = format(applicationDueDate, 'uuuu-MM-dd');
     data.category = data.industry;
-    data.workTimeType = ['keno napusi se'];
-    console.log(data);
+    data.workTimeType = ['Part-time'];
 
-    createPost(data);
+    setCreatePostLoading(true);
+    try {
+      await createPost(data);
+      dispatch(setSnackbar({
+        message: 'Objava za praksu uspješno kreirana',
+        variant: SNACKBAR_VARIANTS.SUCCESS,
+      }));
+    } catch (err) {
+      dispatch(setSnackbar({
+        message: 'Došlo je do greške pri kreiranju objave',
+      }));
+    }
+    setCreatePostLoading(false);
   };
 
   const onSubmitButtonClick = () => {
@@ -104,7 +120,7 @@ function NewPostInput() {
         }}
       >
         <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
+          expandIcon={<ExpandMoreIcon sx={{ color: 'white' }} />}
           sx={{ bgcolor: 'primary.main', color: 'white' }}
         >
           <Typography>Postavite oglas za praksu</Typography>
@@ -129,7 +145,8 @@ function NewPostInput() {
               register={register}
               name="title"
               errorMessage={errors.title?.message}
-              width={{ xs: '100%', lg: '60%' }}
+              width={FIELDS_WIDTH}
+              disabled={createPostLoading}
             />
             <TextFieldComponent
               required
@@ -137,24 +154,21 @@ function NewPostInput() {
               register={register}
               name="description"
               errorMessage={errors.description?.message}
-              width={{ xs: '100%', lg: '60%' }}
+              width={FIELDS_WIDTH}
+              disabled={createPostLoading}
               multiline
               minRows={4}
             />
             <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <Stack spacing={2} pt={2}>
+              <Stack spacing={2} pt={2} direction={{ xs: 'column', lg: 'row' }} sx={{ width: { xs: '260px', lg: '70%', xl: '60%' } }}>
                 <Box>
                   <DatePicker
-                    label={(
-                      <Box sx={{ display: 'flex' }}>
-                        <Typography>Početak</Typography>
-                        <Typography color="error.main" pl="2px">*</Typography>
-                      </Box>
-                    )}
+                    label={<TextWithRedAsterisk>Početak</TextWithRedAsterisk>}
                     openTo="day"
                     views={['day', 'month', 'year']}
                     inputFormat="dd/MM/uuuu"
                     value={startDate}
+                    disabled={createPostLoading}
                     onChange={(newValue) => {
                       if (newValue === null || newValue == 'Invalid Date') {
                         setStartDateError('Datum nije validan');
@@ -197,16 +211,12 @@ function NewPostInput() {
                 </Box>
                 <Box>
                   <DatePicker
-                    label={(
-                      <Box sx={{ display: 'flex' }}>
-                        <Typography>Kraj</Typography>
-                        <Typography color="error.main" pl="2px">*</Typography>
-                      </Box>
-                    )}
+                    label={<TextWithRedAsterisk>Kraj</TextWithRedAsterisk>}
                     openTo="day"
                     views={['day', 'month', 'year']}
                     inputFormat="dd/MM/uuuu"
                     value={endDate}
+                    disabled={createPostLoading}
                     onChange={(newValue) => {
                       if (newValue === null || newValue == 'Invalid Date') {
                         setEndDateError('Datum nije validan');
@@ -239,16 +249,12 @@ function NewPostInput() {
                 </Box>
                 <Box>
                   <DatePicker
-                    label={(
-                      <Box sx={{ display: 'flex' }}>
-                        <Typography>Rok za prijavu</Typography>
-                        <Typography color="error.main" pl="2px">*</Typography>
-                      </Box>
-                    )}
+                    label={<TextWithRedAsterisk>Rok za prijavu</TextWithRedAsterisk>}
                     openTo="day"
                     views={['day', 'month', 'year']}
                     inputFormat="dd/MM/uuuu"
                     value={applicationDueDate}
+                    disabled={createPostLoading}
                     onChange={(newValue) => {
                       if (newValue === null || newValue == 'Invalid Date') {
                         setApplicationDueDateError('Datum nije validan');
@@ -283,28 +289,37 @@ function NewPostInput() {
               </Stack>
             </LocalizationProvider>
             <BasicSelect
-              title="Industrija"
+              title={<TextWithRedAsterisk>Industrija</TextWithRedAsterisk>}
               name="industry"
               register={register}
               errorMessage={errors.industry?.message}
               options={INDUSTRIES}
-              selectedOptions={selectedIndustry}
-              handleOptionsChange={handleIndustryChange}
+              selectedOption={selectedIndustry}
+              handleOptionChange={handleIndustryChange}
+              width={FIELDS_WIDTH}
+              disabled={createPostLoading}
             />
             <MultipleSelect
-              title="Lokacije"
+              title={<TextWithRedAsterisk>Lokacije</TextWithRedAsterisk>}
               name="location"
               register={register}
               errorMessage={errors.location?.message}
               options={LOCATIONS}
               selectedOptions={selectedLocations}
               handleOptionsChange={handleLocationsChange}
+              width={FIELDS_WIDTH}
+              disabled={createPostLoading}
             />
             <Button
               type="submit"
               variant="primary"
-              sx={{ mt: 2 }}
+              sx={{
+                mt: 2,
+                minWidth: '260px',
+                '& .MuiButtonBase-root-MuiButton-root.Mui-disabled': { color: 'red' },
+              }}
               onClick={onSubmitButtonClick}
+              disabled={createPostLoading}
             >
               Postavite oglas
             </Button>

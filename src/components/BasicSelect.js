@@ -11,17 +11,21 @@ function BasicSelect({
   name,
   register,
   errorMessage,
+  width,
+  disabled,
 }) {
   return (
-    <Box sx={{ width: { xs: '100%', lg: '60%' }, mt: 2 }}>
+    <Box sx={{ width, mt: 2 }}>
       <FormControl fullWidth>
         <InputLabel id={name}>{title}</InputLabel>
         <Select
+          name={name}
           {...register(name)}
           labelId={name}
-          value={selectedOption}
           label={title}
+          value={selectedOption}
           onChange={handleOptionChange}
+          disabled={disabled}
         >
           {options.map((option) => (
             <MenuItem key={option} value={option}>{option}</MenuItem>

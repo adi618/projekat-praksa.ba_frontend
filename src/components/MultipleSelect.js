@@ -20,17 +20,20 @@ function MultipleSelect({
   name,
   register,
   errorMessage,
+  width,
+  disabled,
 }) {
   return (
-    // TODO: fix width
-    <FormControl sx={{ mt: 2, width: { xs: '100%', lg: '60%' } }}>
+    <FormControl sx={{ mt: 2, width }}>
       <InputLabel id={name}>{title}</InputLabel>
       <Select
+        required
         {...register(name)}
         labelId={name}
         multiple
         value={selectedOptions}
         onChange={handleOptionsChange}
+        disabled={disabled}
         input={<OutlinedInput label={name} />}
         renderValue={(selected) => (
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>

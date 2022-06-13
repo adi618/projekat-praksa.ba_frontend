@@ -12,7 +12,7 @@ export const snackbarSlice = createSlice({
   initialState,
   reducers: {
     setSnackbar: (state, action) => {
-      state.isVisible = action.payload.isVisible;
+      state.isVisible = action.payload.isVisible || true;
       state.message = action.payload?.message || 'Došlo je do greške';
       state.variant = action.payload?.variant || SNACKBAR_VARIANTS.ERROR;
     },
