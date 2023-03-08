@@ -1,26 +1,42 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import PostList from '../containers/Post/PostList';
+import {
+  Box, Typography, Button, Divider,
+} from '@mui/material';
+
+import { useNavigate } from 'react-router-dom';
+import { ROUTE_PATHS } from '../constants';
 
 function Home() {
-  const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    (async () => {
-      axios
-        .get('https://shoppingapiacme.herokuapp.com/shopping')
-        .then((res) => {
-          console.log(res);
-          setPosts(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    })();
-  }, []);
-
+  const navigate = useNavigate();
   return (
-    <PostList posts={posts} />
+    <Box sx={{ width: '100%', textAlign: 'center' }}>
+      <Typography
+        variant="body2"
+        color="text.grey.700"
+        fontWeight="semiBold"
+      >
+        Student si?
+      </Typography>
+      <Button
+        variant="primary"
+        onClick={() => navigate(ROUTE_PATHS.SEARCHING_FOR_INTERNSHIP)}
+      >
+        Tražis praksu?
+      </Button>
+      <Divider sx={{ mx: '15%' }} />
+      <Typography
+        variant="body2"
+        fontWeight="semiBold"
+        color="text.grey.700"
+      >
+        Kompanija ste?
+      </Typography>
+      <Button
+        variant="primary"
+        onClick={() => navigate(ROUTE_PATHS.OFFERING_INTERNSHIP)}
+      >
+        Nudite praksu?
+      </Button>
+    </Box>
   );
 }
 

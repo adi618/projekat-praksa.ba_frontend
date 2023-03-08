@@ -1,21 +1,141 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { signIn, signUp, verifyToken } from '../api';
+import { setSnackbar } from './snackbar';
+import { AUTHENTICATION_TYPE, SNACKBAR_VARIANTS } from '../constants';
 
-const initialState = { value: '' }; // temporary, needs to be an object with more info?
+const { LOGIN, REGISTER } = AUTHENTICATION_TYPE;
+
+const initialState = {
+  isLoggedIn: false,
+  user: {},
+  error: {
+    isError: false,
+    message: '',
+  },
+  isLoading: true,
+};
+
+const authenticate = async (user, { rejectWithValue, dispatch }, type) => {
+  try {
+    let response;
+    if (type === LOGIN) {
+      response = await signIn(user);
+    } else if (type === REGISTER) {
+      response = await signUp(user);
+    } else {
+      throw new Error();
+    }
+    dispatch(setSnackbar({
+      isVisible: true,
+      message: `Uspješno ste se ${
+        type === LOGIN ? 'prijavili!' : 'registrovali!'
+      }`,
+      variant: SNACKBAR_VARIANTS.SUCCESS,
+    }));
+
+    return response.data;
+  } catch (err) {
+    let errorMessage;
+    if (err?.response?.request?.responseText) {
+      try {
+        errorMessage = JSON.parse(err?.response?.request?.responseText)?.message;
+      } catch {
+        errorMessage = 'Došlo je do greške';
+      }
+    }
+    dispatch(setSnackbar({
+      isVisible: true,
+      message: errorMessage,
+      variant: SNACKBAR_VARIANTS.ERROR,
+    }));
+    return rejectWithValue(errorMessage);
+  }
+};
+
+const authenticateFulfilled = (state, action) => {
+  state.isLoggedIn = true;
+  const { user, token } = action.payload;
+  state.user = user;
+  localStorage.setItem('token', token);
+  state.error.isError = false;
+  state.isLoading = false;
+};
+
+const authenticatePending = (state) => {
+  state.isLoggedIn = false;
+  state.isLoading = true;
+  state.error.isError = false;
+};
+
+const authenticateRejected = (state, action) => {
+  state.isLoggedIn = false;
+  state.error.message = action.payload;
+  state.error.isError = true;
+  state.isLoading = false;
+};
+
+export const verifyTokenUser = createAsyncThunk(
+  'user/verifyToken',
+  async (token, { rejectWithValue }) => {
+    try {
+      const response = await verifyToken(token);
+
+      return response.data;
+    } catch {
+      return rejectWithValue();
+    }
+  },
+);
+
+export const signUpUser = createAsyncThunk(
+  'user/signUp',
+  async (user, { rejectWithValue, dispatch }) => authenticate(
+    user,
+    { rejectWithValue, dispatch },
+    REGISTER,
+  ),
+);
+
+export const signInUser = createAsyncThunk(
+  'user/signIn',
+  async (user, { rejectWithValue, dispatch }) => authenticate(
+    user,
+    { rejectWithValue, dispatch },
+    LOGIN,
+  ),
+);
 
 export const userSlice = createSlice({
-  name: 'user',
+  name: 'userData',
   initialState,
   reducers: {
-    login: (state, action) => {
-      state.value = action.payload;
-    },
-
     logout: (state) => {
-      state.value = initialState.value;
+      state.isLoggedIn = false;
+      state.user = {};
+      state.error = { isError: false, message: '' };
+      state.isLoading = false;
+      localStorage.removeItem('token');
+    },
+    tokenMissing: (state) => {
+      state.isLoading = false;
+    },
+  },
+  extraReducers: {
+    [signUpUser.fulfilled]: authenticateFulfilled,
+    [signUpUser.pending]: authenticatePending,
+    [signUpUser.rejected]: authenticateRejected,
+    [signInUser.fulfilled]: authenticateFulfilled,
+    [signInUser.pending]: authenticatePending,
+    [signInUser.rejected]: authenticateRejected,
+    [verifyTokenUser.fulfilled]: authenticateFulfilled,
+    [verifyTokenUser.pending]: authenticatePending,
+    [verifyTokenUser.rejected]: (state) => {
+      state.isLoggedIn = false;
+      state.isLoading = false;
     },
   },
 });
 
-export const { login, logout } = userSlice.actions;
+export const { logout, tokenMissing } = userSlice.actions;
 
 export default userSlice.reducer;
